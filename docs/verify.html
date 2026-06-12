@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>外部に通信しないことの確認方法 — usagii</title>
+<meta name="description" content="usagii が外部と通信しないことを、導入前にご自身の環境で検証するための手順です。">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="icon" type="image/png" sizes="96x96" href="./favicon-96.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coral:#D85A30; --paper:#FAF8F6; --ink:#211D1A; --mist:#6E6862; --line:rgba(33,29,26,.12);
+  --card:#FFFFFF;
+  --disp:'Zen Maru Gothic','Hiragino Maru Gothic ProN',sans-serif;
+  --body:'Hiragino Sans','Yu Gothic UI','Segoe UI',sans-serif;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme: dark){
+  :root{--coral:#E8693F;--paper:#1B1917;--ink:#ECE8E4;--mist:#A39C95;--line:rgba(236,232,228,.14);--card:#252220}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.95;font-feature-settings:"palt";-webkit-font-smoothing:antialiased}
+a{color:var(--coral);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:6px}
+main{max-width:720px;margin:0 auto;padding:64px 24px 40px}
+.back{display:inline-block;font-size:13.5px;font-family:var(--disp);font-weight:700}
+h1{font-family:var(--disp);font-weight:900;font-size:clamp(24px,4.4vw,34px);line-height:1.4;margin:26px 0 6px}
+.upd{font-size:12.5px;color:var(--mist)}
+h2{font-family:var(--disp);font-weight:700;font-size:18px;margin:42px 0 10px;padding-top:26px;border-top:1px solid var(--line)}
+p,li{font-size:14.5px;color:var(--mist)}
+p{margin-top:10px}
+ol,ul{margin:10px 0 0 1.5em}
+li{margin-top:6px}
+b{color:var(--ink)}
+code{font-family:Consolas,monospace;font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+.note{margin-top:14px;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:12px;font-size:13.5px}
+footer{max-width:720px;margin:0 auto;padding:40px 24px 56px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mist);display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+footer .mk{font-family:var(--disp);font-weight:900;color:var(--coral)}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="./index.html">← usagii トップへ</a>
+  <h1>外部に通信しないことの確認方法</h1>
+  <p class="upd">対象: usagii(Windows 版)/ 想定読者: 導入を検討される企業の管理者の方</p>
+
+  <p>usagii は、予定データ・設定・テレメトリを含む一切の情報を外部へ送信しない設計です。本ページは、それを宣言だけで終わらせず、<b>導入側の検証環境で実際に確認していただくための手順</b>をまとめたものです。</p>
+
+  <h2>手順 A: 通信モニタで実測する(約 10 分)</h2>
+  <ol>
+    <li>検証用の PC または VM に usagii をインストールします</li>
+    <li>Microsoft 純正の <a href="https://learn.microsoft.com/sysinternals/downloads/tcpview">TCPView(Sysinternals)</a>を起動します(より厳密に確認する場合は Wireshark でパケットキャプチャしてください)</li>
+    <li>usagii を起動し、予定の登録・編集・検索・テーマ切替・アプリ再起動など一通り操作します</li>
+    <li><b>usagii.exe、および usagii が起動する WebView2 プロセスからの外部宛て接続が 1 件も発生しない</b>ことを確認します</li>
+  </ol>
+  <div class="note">補足: Windows 自体や WebView2 ランタイム(Microsoft 製の OS コンポーネント)は、usagii とは無関係に Microsoft のサーバーと更新確認等の通信を行うことがあります。検証の際は「usagii のプロセスを起点とする接続」に注目してください。</div>
+
+  <h2>手順 B: ファイアウォールで遮断したまま運用する(恒久的な保証)</h2>
+  <p>usagii はネットワークを一切必要としないため、<b>送信(アウトバウンド)を遮断した状態でも全機能が動作します</b>。開発者を信頼する必要すらない、最も確実な担保です。</p>
+  <ol>
+    <li>「セキュリティが強化された Windows Defender ファイアウォール」を開く</li>
+    <li>「送信の規則」→「新しい規則」→ プログラムに usagii.exe(既定では <code>%LOCALAPPDATA%\usagii\usagii.exe</code>)を指定し、「接続をブロックする」で作成</li>
+    <li>遮断状態のまま、すべての機能が正常に動作することを確認</li>
+  </ol>
+
+  <h2>技術的根拠</h2>
+  <ul>
+    <li><b>ネットワーク系ライブラリ不使用</b> — usagii は HTTP クライアント等の通信ライブラリを一切組み込んでいません。使用ライブラリの一覧(SBOM)はお問い合わせいただければ提出できます</li>
+    <li><b>コンテンツセキュリティポリシー(CSP)による遮断</b> — アプリの UI 層には「アプリ内部以外への接続を許可しない」ポリシーを焼き込んでおり、仮に将来の改修で通信コードが紛れ込んでも実行層でブロックされます</li>
+    <li><b>自動更新機構なし</b> — 更新確認のために外部へ接続する仕組み自体が存在しません。更新は管理者がバージョンを指定してインストーラを実行したときだけ行われます(<a href="./index.html#gov">導入にあたって</a>)</li>
+    <li><b>依存ライブラリの脆弱性検査</b> — リリースビルド時に Rust / JavaScript の依存ライブラリを既知脆弱性データベース(RustSec / npm advisory)と突合し、検出された場合は公開を中止します</li>
+  </ul>
+
+  <h2>お問い合わせ</h2>
+  <p>検証中に不明な点があれば <a href="https://github.com/koutakagatsume/usagii/issues">GitHub の Issues</a> からご連絡ください。</p>
+
+  <p style="margin-top:48px"><a class="back" href="./index.html">← usagii トップへ</a></p>
+</main>
+<footer>
+  <span class="mk">usagii</span>
+  <span>© 2026 usagii project</span>
+  <a href="https://github.com/koutakagatsume/usagii">GitHub</a>
+  <a href="./changelog.html">更新履歴</a>
+  <a href="./privacy.html">プライバシー・免責事項</a>
+  <a href="./verify.html">通信の検証方法</a>
+  <a href="./usagi.html">名前の由来</a>
+</footer>
+</body>
+</html>

@@ -1,0 +1,124 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>更新履歴 — usagii</title>
+<meta name="description" content="usagii の更新履歴。各バージョンの変更点とダウンロードリンク。">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="icon" type="image/png" sizes="96x96" href="./favicon-96.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coral:#D85A30; --paper:#FAF8F6; --ink:#211D1A; --mist:#6E6862; --line:rgba(33,29,26,.12);
+  --card:#FFFFFF;
+  --disp:'Zen Maru Gothic','Hiragino Maru Gothic ProN',sans-serif;
+  --body:'Hiragino Sans','Yu Gothic UI','Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root{--coral:#E8693F;--paper:#1B1917;--ink:#ECE8E4;--mist:#A39C95;--line:rgba(236,232,228,.14);--card:#252220}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.95;font-feature-settings:"palt";-webkit-font-smoothing:antialiased}
+a{color:var(--coral);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:6px}
+main{max-width:720px;margin:0 auto;padding:64px 24px 40px}
+.back{display:inline-block;font-size:13.5px;font-family:var(--disp);font-weight:700}
+h1{font-family:var(--disp);font-weight:900;font-size:clamp(24px,4.4vw,34px);line-height:1.4;margin:26px 0 6px}
+.note{font-size:12.5px;color:var(--mist)}
+.release{margin-top:36px;padding:24px 26px;background:var(--card);border:1px solid var(--line);border-radius:16px}
+.release h2{font-family:var(--disp);font-weight:900;font-size:20px;color:var(--coral);display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.release .date{font-family:var(--body);font-weight:400;font-size:12.5px;color:var(--mist)}
+.release .latest{font-size:11px;font-family:var(--disp);font-weight:700;background:var(--coral);color:#fff;padding:2px 10px;border-radius:999px}
+.release .body{margin-top:10px;font-size:14px;color:var(--mist)}
+.release .body p{margin-top:6px}
+.release .body ul{margin:6px 0 0 1.4em}
+.release .body li{margin-top:2px}
+.release .links{display:flex;gap:22px;flex-wrap:wrap;margin-top:14px}
+.release .dl{font-size:13px;font-family:var(--disp);font-weight:700}
+.status{margin-top:40px;font-size:14px;color:var(--mist)}
+footer{max-width:720px;margin:0 auto;padding:40px 24px 56px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mist);display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+footer .mk{font-family:var(--disp);font-weight:900;color:var(--coral)}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="./index.html">← usagii トップへ</a>
+  <h1>更新履歴</h1>
+  <p class="note">各バージョンの変更点です。インストーラを実行するだけで上書き更新でき、予定データは引き継がれます。</p>
+
+  <div id="list"><p class="status">読み込み中…</p></div>
+
+  <p style="margin-top:48px"><a class="back" href="./index.html">← usagii トップへ</a></p>
+</main>
+<footer>
+  <span class="mk">usagii</span>
+  <span>© 2026 usagii project</span>
+  <a href="https://github.com/koutakagatsume/usagii">GitHub</a>
+  <a href="./changelog.html">更新履歴</a>
+  <a href="./privacy.html">プライバシー・免責事項</a>
+  <a href="./verify.html">通信の検証方法</a>
+  <a href="./usagi.html">名前の由来</a>
+</footer>
+
+<script>
+// GitHub Releases を取得して一覧表示する (リリースノートは GitHub 側で記述)
+const REPO='koutakagatsume/usagii';
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// リリース本文の最小マークダウン描画 (箇条書きと段落のみ)
+function md(body){
+  if(!body||!body.trim())return '<p>(変更点の記載はありません)</p>';
+  const out=[];let ul=[];
+  const flush=()=>{if(ul.length){out.push('<ul>'+ul.map(li=>'<li>'+li+'</li>').join('')+'</ul>');ul=[];}};
+  body.split(/\r?\n/).forEach(line=>{
+    const t=line.trim();
+    if(!t){flush();return;}
+    const m=t.match(/^[-*]\s+(.+)/);
+    if(m){ul.push(esc(m[1]));return;}
+    flush();
+    out.push('<p>'+esc(t.replace(/^#+\s*/,''))+'</p>');
+  });
+  flush();
+  return out.join('');
+}
+function dateStr(iso){
+  const d=new Date(iso);
+  return d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日';
+}
+fetch('https://api.github.com/repos/'+REPO+'/releases?per_page=50')
+  .then(r=>r.ok?r.json():Promise.reject(new Error(r.status)))
+  .then(rels=>{
+    const list=document.getElementById('list');
+    const items=rels.filter(r=>!r.draft&&!r.prerelease);
+    if(!items.length){
+      list.innerHTML='<p class="status">まだリリースがありません。</p>';
+      return;
+    }
+    list.innerHTML=items.map((r,i)=>{
+      // バージョン付き setup.exe (固定名 usagii-setup.exe は最新版用なので除外)
+      const assets=r.assets||[];
+      const exe=assets.find(a=>a.name!=='usagii-setup.exe'&&a.name.endsWith('-setup.exe'))
+              ||assets.find(a=>a.name.endsWith('.exe'));
+      return '<article class="release">'+
+        '<h2>'+esc(r.tag_name)+(i===0?'<span class="latest">最新</span>':'')+
+        '<span class="date">'+dateStr(r.published_at)+'</span></h2>'+
+        '<div class="body">'+md(r.body)+'</div>'+
+        '<div class="links">'+
+          (exe?'<a class="dl" href="'+esc(exe.browser_download_url)+'">このバージョンをダウンロード</a>':'')+
+          '<a class="dl" href="'+esc(r.html_url)+'">詳細 (GitHub) →</a>'+
+        '</div>'+
+      '</article>';
+    }).join('');
+  })
+  .catch(()=>{
+    document.getElementById('list').innerHTML=
+      '<p class="status">履歴を取得できませんでした。<a href="https://github.com/'+REPO+'/releases">GitHub の Releases</a> をご覧ください。</p>';
+  });
+</script>
+</body>
+</html>

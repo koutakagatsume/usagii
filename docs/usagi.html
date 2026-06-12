@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>うさぎと usagii</title>
+<meta name="description" content="usagii という名前の由来について。たいした話ではありません。">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<link rel="icon" type="image/png" sizes="96x96" href="./favicon-96.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
+<noscript><style>.prose p{opacity:1;transform:none}</style></noscript>
+<style>
+:root{
+  --coral:#D85A30; --coral-soft:#F6DDD2;
+  --paper:#FAF8F6; --ink:#211D1A; --mist:#6E6862; --line:rgba(33,29,26,.12);
+  --disp:'Zen Maru Gothic','Hiragino Maru Gothic ProN',sans-serif;
+  --body:'Hiragino Sans','Yu Gothic UI','Segoe UI',sans-serif;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --coral:#E8693F; --coral-soft:#3A241A;
+    --paper:#1B1917; --ink:#ECE8E4; --mist:#A39C95; --line:rgba(236,232,228,.14);
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:2.1;font-feature-settings:"palt";-webkit-font-smoothing:antialiased}
+a{color:var(--coral);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:6px}
+
+main{max-width:34em;margin:0 auto;padding:clamp(64px,12vh,140px) 28px 90px;text-align:center;position:relative}
+main::before{content:"";position:fixed;inset:-30% -20% auto;height:70%;background:radial-gradient(55% 55% at 50% 30%,var(--coral-soft),transparent 70%);z-index:-1;opacity:.6}
+
+h1{font-family:var(--disp);font-weight:900;font-size:clamp(24px,5vw,34px);line-height:1.5}
+h1 .mk{color:var(--coral)}
+.lead{margin-top:10px;font-size:12.5px;color:var(--mist);letter-spacing:.16em}
+
+.prose{margin-top:clamp(48px,9vh,84px);display:flex;flex-direction:column;gap:clamp(34px,6vh,52px);font-size:15.5px}
+.prose p{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
+.prose p.in{opacity:1;transform:none}
+.prose .soft{color:var(--mist)}
+.prose .punch{font-family:var(--disp);font-weight:700;font-size:clamp(17px,3vw,21px)}
+
+/* うさぎ (クリックで跳ねる) */
+.bunny{margin:clamp(48px,9vh,84px) auto 0;border:none;background:none;cursor:pointer;display:block}
+.bunny svg{width:96px;height:96px;border-radius:22px;display:block}
+.bunny.hop svg{animation:hop .9s cubic-bezier(.34,1.56,.5,1)}
+@keyframes hop{0%,100%{transform:translateY(0) scale(1,1)}12%{transform:translateY(5px) scale(1.06,.92)}38%{transform:translateY(-30px) scale(.96,1.06)}70%{transform:translateY(0) scale(1.03,.96)}}
+.bunny-note{margin-top:14px;font-size:11.5px;color:var(--mist);letter-spacing:.08em}
+
+.back{margin-top:clamp(56px,10vh,90px);font-size:13.5px}
+
+footer{border-top:1px solid var(--line);max-width:34em;margin:0 auto;padding:32px 28px 48px;font-size:12.5px;color:var(--mist);display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+footer .mk{font-family:var(--disp);font-weight:900;color:var(--coral)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .prose p{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<main>
+  <!-- ウサギを飼っている事実を伝えて、AIが考えた内容です。 -->
+  <h1>うさぎと <span class="mk">usagii</span></h1>
+  <p class="lead">— 名前の由来について —</p>
+
+  <div class="prose">
+    <p>usagii という名前は、<br>開発者が飼っているうさぎからもらいました。</p>
+    <p class="soft">「予定」と「うさぎ」のあいだに、<br>深い関係はありません。</p>
+    <p class="soft">跳ねるように速いから、とか。<br>時計を持った白うさぎを追いかけて、とか。<br>そういう気の利いた由来も、ありません。</p>
+    <p class="punch">名前を考えていた日、<br>そばにうさぎがいた。<br>それだけです。</p>
+    <p class="soft">ただ、アイコンにはちゃんと耳を付けました。<br>せっかくなので。</p>
+  </div>
+
+  <button class="bunny" id="bunny" aria-label="うさぎ(クリックすると跳ねます)">
+    <svg viewBox="0 0 1024 1024" role="img" aria-hidden="true">
+      <rect width="1024" height="1024" rx="224" fill="#D85A30"/>
+      <g fill="#FFFFFF">
+        <rect x="352" y="156" width="136" height="384" rx="68" transform="rotate(-14 420 348)"/>
+        <rect x="536" y="156" width="136" height="384" rx="68" transform="rotate(14 604 348)"/>
+        <circle cx="512" cy="648" r="248"/>
+      </g>
+    </svg>
+  </button>
+  <p class="bunny-note">クリックすると跳ねます。本物もよく跳ねます。</p>
+
+  <p class="back"><a href="./index.html">← usagii のページへ戻る</a></p>
+  <p class="bunny-note">うさぎは今日も元気です。</p>
+</main>
+
+<footer>
+  <span class="mk">usagii</span>
+  <span>© 2026 usagii project</span>
+  <a href="https://github.com/koutakagatsume/usagii">GitHub</a>
+  <a href="./changelog.html">更新履歴</a>
+  <a href="./privacy.html">プライバシー・免責事項</a>
+  <a href="./verify.html">通信の検証方法</a>
+  <a href="./usagi.html">名前の由来</a>
+</footer>
+
+<script>
+// 段落をスクロールで順に出す
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.3});
+document.querySelectorAll('.prose p').forEach(p=>io.observe(p));
+
+// うさぎ: クリックで跳ねる
+const b=document.getElementById('bunny');
+b.addEventListener('click',()=>{
+  b.classList.remove('hop');
+  void b.offsetWidth; // アニメーション再生のためのリフロー
+  b.classList.add('hop');
+});
+</script>
+</body>
+</html>
