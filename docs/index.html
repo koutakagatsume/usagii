@@ -230,6 +230,7 @@ h1,h2,h3,.disp{font-family:var(--disp);font-weight:900;line-height:1.35;letter-s
 @media (prefers-color-scheme:dark){.dm-quick input[type="date"]{color-scheme:dark}}
 .dm-add{border:1px solid var(--itx);background:var(--ibg);color:var(--itx);border-radius:8px;padding:4px 11px;font-size:11.5px;cursor:pointer;white-space:nowrap}
 .dm-add:disabled{opacity:.45;cursor:default}
+.dm-qtoday{border:1px solid var(--bd);background:transparent;color:var(--tx2);border-radius:8px;padding:4px 10px;font-size:11.5px;cursor:pointer;white-space:nowrap}
 /* セクション見出し (ピン留め / 検索) */
 .dm-ph{display:flex;align-items:center;gap:5px;padding:3px 10px 1px;font-size:10.5px;color:var(--tx3)}
 .dm-ph .tgl{border:none;background:none;color:var(--tx3);cursor:pointer;font-size:10px;padding:1px 4px}
@@ -277,6 +278,9 @@ h1,h2,h3,.disp{font-family:var(--disp);font-weight:900;line-height:1.35;letter-s
   scroll-margin-top:34px} /* ジャンプ時に stuck した日付ヘッダの裏に隠れないように */
 .dm-row.ck{opacity:.55}
 .dm-row.ck .dm-tt{text-decoration:line-through}
+.dm-row[draggable]{cursor:grab}
+.dm-row.dragging{opacity:.4;cursor:grabbing}
+.dm-day.drop-on{background:var(--ibg);border-radius:8px}
 .dm-main{flex:1;min-width:0}
 .dm-tm{color:var(--tx2);font-size:11px;white-space:nowrap;font-variant-numeric:tabular-nums;margin-right:6px}
 .dm-tt{font-size:13px}
@@ -562,6 +566,7 @@ footer .mk{font-family:var(--disp);font-weight:900;color:var(--coral)}
       </div>
       <div class="dm-more">
         <input type="date" id="dmDate" aria-label="日付">
+        <button class="dm-qtoday" id="dmQToday" type="button" style="display:none">今日</button>
         <span class="dm-chips" id="dmQCats" style="padding:0"></span>
       </div>
     </div>
@@ -716,9 +721,15 @@ const items=[
 ];
 let tab='active',newId=0,sel=new Set(),qcats=new Set(),pinsCol=false,sectCol=false;
 let vw='day',va=new Date(t0); // 表示モード (日|週|月) と週・月の基準日
+let dragItem=null; // DnD でドラッグ中の予定
 const list=$('dmList'),pinsEl=$('dmPins'),toastEl=$('dmToast'),quick=$('dmQuick'),
       ti=$('dmTitle'),di=$('dmDate'),addBtn=$('dmAdd'),qi=$('dmQuery');
 di.value=iso(t0);
+// 日付が今日以外のとき「今日」ボタンを出す
+const qToday=$('dmQToday');
+const syncQToday=()=>{qToday.style.display=di.value!==iso(t0)?'':'none';};
+di.addEventListener('change',syncQToday);
+qToday.addEventListener('click',()=>{di.value=iso(t0);syncQToday();});
 let toastT;
 const toast=m=>{toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>toastEl.classList.remove('show'),1600);};
 const daysTo=k=>Math.round((parse(k)-t0)/864e5);
@@ -853,6 +864,18 @@ function renderDay(){
     const day=document.createElement('div');
     day.className='dm-day';
     day.dataset.k=k;
+    // DnD: 別日付のセクションへドロップで移動
+    day.addEventListener('dragover',e=>{
+      if(dragItem&&dragItem.date!==k){e.preventDefault();day.classList.add('drop-on');}
+    });
+    day.addEventListener('dragleave',()=>day.classList.remove('drop-on'));
+    day.addEventListener('drop',e=>{
+      e.preventDefault();day.classList.remove('drop-on');
+      if(dragItem&&dragItem.date!==k){
+        const m=dragItem;m.date=k;dragItem=null;newId=m.id;render();
+        toast(fmt(parse(k))+' に移動しました');
+      }
+    });
     const dh=document.createElement('div');
     dh.className='dm-dh'+(k===tk?' now':d.getDay()===0?' sun':d.getDay()===6?' sat':'');
     const sp=document.createElement('span');sp.textContent=fmt(d);dh.appendChild(sp);
@@ -868,6 +891,14 @@ function renderDay(){
       const r=document.createElement('div');
       r.className='dm-row'+(i.done?' ck':'')+(i.id===newId?' new':'');
       r.dataset.id=i.id;
+      r.draggable=true;
+      r.addEventListener('dragstart',e=>{
+        dragItem=i;r.classList.add('dragging');e.dataTransfer.effectAllowed='move';
+      });
+      r.addEventListener('dragend',()=>{
+        dragItem=null;r.classList.remove('dragging');
+        list.querySelectorAll('.dm-day.drop-on').forEach(d=>d.classList.remove('drop-on'));
+      });
       const cb=document.createElement('input');
       cb.type='checkbox';cb.checked=i.done;
       cb.setAttribute('aria-label',i.title+' を完了にする');
