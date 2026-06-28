@@ -45,12 +45,24 @@
   details[open] .ub-faqmark{transform:rotate(135deg)}
   .ub-link{color:var(--link);font-weight:700;border-bottom:2px solid rgba(216,90,48,.3)}
   .ub-link:hover{border-color:#D85A30}
+  .ub-steptext{display:flex;flex-direction:column;align-items:flex-start}
   @media (max-width:900px){
-    .ub-storygrid{grid-template-columns:1fr!important;gap:0!important}
-    .ub-stage{position:sticky!important;top:0!important;height:auto!important;order:-1!important;padding:16px 0 8px!important;background:linear-gradient(var(--bg) 78%,transparent)!important;z-index:2}
-    .ub-mockscale{transform:scale(.74);transform-origin:top center;margin-bottom:-120px}
+    /* スマホでも PC と同じスクロールテリング: モックを上部に固定し、各機能テキストは
+       モックの下に sticky 固定。スクロールでモックのシーンと下のテキストが 01→04 に切り替わる。
+       テキストが常にモック下に居座るので、余白やバッジの重なりが出ない。 */
+    .ub-storygrid{grid-template-columns:1fr!important;gap:0!important;padding-left:20px!important;padding-right:20px!important}
+    .ub-stage{position:sticky!important;top:72px!important;height:auto!important;order:-1!important;z-index:5;display:flex!important;justify-content:center;padding:10px 0 6px!important;background:var(--surface)!important}
+    .ub-mockscale{zoom:.5}
     .ub-steps{padding:0!important}
-    .ub-step{min-height:84vh!important;padding:0!important}
+    .ub-step{min-height:84vh!important;padding:0!important;max-width:none!important;display:block!important}
+    /* 各機能テキストはモック下の同じ位置に固定し、有効な1つだけ表示。切替はクロスフェード */
+    /* テキストは sticky でモック下に固定(その機能のステップ=features 内に紐づくので、
+       セクションを抜けると一緒にスクロールアウトして次セクションに残らない)。
+       有効な1機能だけ opacity で表示する。 */
+    .ub-steptext{position:sticky!important;top:466px;opacity:0;pointer-events:none}
+    .ub-steptext.is-on{opacity:1}
+    .ub-steptext h2{font-size:25px!important;line-height:1.26!important;margin-bottom:10px!important}
+    .ub-steptext p{font-size:15px!important}
     .ub-hide-sm{display:none!important}
   }
   @media (max-width:560px){
@@ -127,24 +139,32 @@
   <div class="ub-pad ub-storygrid" style="max-width:1140px;margin:0 auto;padding:0 26px;display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:start">
     <div class="ub-steps" style="order:1;padding:8vh 0">
       <div class="ub-step" data-scene="list" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
+        <div class="ub-steptext">
         <span style="align-self:flex-start;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.06em;color:#fff;background:#86D9B9;color:#0d5b45;padding:5px 14px;border-radius:999px;margin:0 0 14px">01 リスト</span>
         <h2 style="margin:0 0 16px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,3.6vw,40px);line-height:1.28;color:var(--fg)">予定がある日だけ、<br>まっすぐ。</h2>
         <p style="margin:0;color:var(--fg2);font-size:16.5px;text-wrap:pretty">空白の日は出しません。日付はスクロールで上に貼り付き、「今日」ボタンでいつでも現在へ。週・月表示にもワンタップで切り替え。</p>
+        </div>
       </div>
       <div class="ub-step" data-scene="pin" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
+        <div class="ub-steptext">
         <span style="align-self:flex-start;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.06em;background:#FFC25C;color:#6b4a00;padding:5px 14px;border-radius:999px;margin:0 0 14px">02 ピン留め</span>
         <h2 style="margin:0 0 16px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,3.6vw,40px);line-height:1.28;color:var(--fg)">2ヶ月先の締切が、<br>ずっと見えてる。</h2>
         <p style="margin:0;color:var(--fg2);font-size:16.5px;text-wrap:pretty">ピン留めした予定は一覧の最上部に固定。「あと N 日」のカウントダウンで、遠い締切も見失いません。</p>
+        </div>
       </div>
       <div class="ub-step" data-scene="cat" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
+        <div class="ub-steptext">
         <span style="align-self:flex-start;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.06em;background:#93C5F0;color:#0c447c;padding:5px 14px;border-radius:999px;margin:0 0 14px">03 カテゴリ</span>
         <h2 style="margin:0 0 16px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,3.6vw,40px);line-height:1.28;color:var(--fg)">色で分けて、<br>ぱっと絞る。</h2>
         <p style="margin:0;color:var(--fg2);font-size:16.5px;text-wrap:pretty">予定には複数のカテゴリを付けられます。バッジをクリックすれば、その仲間だけにきゅっと絞り込み。</p>
+        </div>
       </div>
       <div class="ub-step" data-scene="theme" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
+        <div class="ub-steptext">
         <span style="align-self:flex-start;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.06em;background:var(--fg);color:var(--surface);padding:5px 14px;border-radius:999px;margin:0 0 14px">04 テーマ</span>
         <h2 style="margin:0 0 16px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,3.6vw,40px);line-height:1.28;color:var(--fg)">夜は、<br>ダークに。</h2>
         <p style="margin:0;color:var(--fg2);font-size:16.5px;text-wrap:pretty">ライト・ダークの手動切替に加えて、OS の設定に合わせた自動切り替えにも対応しています。</p>
+        </div>
       </div>
     </div>
     <div class="ub-stage" style="order:2;position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center">
@@ -306,14 +326,29 @@ class Component extends DCLogic {
       rvs.forEach(el => io.observe(el));
     }
     const setScene = (s) => {
-      const m = document.querySelector('#features usagii-appmock');
+      const m = document.querySelector('.ub-stage usagii-appmock');
       if (m) m.setAttribute('scene', s);
     };
     const steps = document.querySelectorAll('.ub-step');
     if (steps.length && 'IntersectionObserver' in window) {
+      // スマホはモックを上部に固定し、ビューポート中央のステップを「有効」にして
+      // その機能のテキストだけを表示する(切替はフェード)。
+      const mobile = window.matchMedia('(max-width:900px)').matches;
+      const opts = mobile ? { rootMargin: '-56% 0px -36% 0px', threshold: 0 } : { threshold: 0.55 };
+      const stepArr = [...steps];
+      const visible = new Set();
       const so = new IntersectionObserver((es) => {
-        es.forEach(e => { if (e.isIntersecting && e.target.dataset.scene) setScene(e.target.dataset.scene); });
-      }, { threshold: 0.55 });
+        es.forEach(e => { if (e.isIntersecting) visible.add(e.target); else visible.delete(e.target); });
+        // ビューポート中央にあるステップ(無ければ null)を有効化。
+        // テキストは直接クラスで即時切替(CSS トランジション/子孫セレクタはスクロール由来の
+        // 変更で確実に発火しないため)。中央に無い間は全消しして他セクションに残らないようにする。
+        const active = stepArr.find(s => visible.has(s)) || null;
+        stepArr.forEach(s => {
+          const tx = s.querySelector('.ub-steptext');
+          if (tx) tx.classList.toggle('is-on', s === active);
+        });
+        if (active && active.dataset.scene) setScene(active.dataset.scene);
+      }, opts);
       steps.forEach(el => so.observe(el));
     }
     this._initTheme();
