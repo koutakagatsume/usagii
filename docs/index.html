@@ -6,7 +6,6 @@
 <title>usagii — 予定だけを、まっすぐ並べる。</title>
 <meta name="description" content="カレンダーではなくリスト。予定のある日だけが一本に並ぶ、Windows 用の無料の予定リスト・予定管理アプリ。オフライン完結で外部通信なし。">
 <link rel="canonical" href="https://usagii.jp/">
-<!-- Open Graph / Twitter (SNS・チャットで共有したときのプレビュー) -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="usagii">
 <meta property="og:locale" content="ja_JP">
@@ -18,1098 +17,333 @@
 <meta name="twitter:title" content="usagii — 予定だけを、まっすぐ並べる。">
 <meta name="twitter:description" content="予定のある日だけが一本に並ぶ、Windows 用の無料の予定リストアプリ。オフライン完結。">
 <meta name="twitter:image" content="https://usagii.jp/apple-touch-icon.png">
-<!-- 構造化データ: 無料の Windows アプリだと検索エンジンに明示 -->
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "usagii",
-  "url": "https://usagii.jp/",
-  "operatingSystem": "Windows 10, Windows 11",
-  "applicationCategory": "BusinessApplication",
-  "inLanguage": "ja",
-  "image": "https://usagii.jp/apple-touch-icon.png",
-  "description": "予定のある日だけが一本に並ぶ、Windows 用の予定リスト・予定管理アプリ。無料・オフライン完結。",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" }
-}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"usagii","url":"https://usagii.jp/","operatingSystem":"Windows 10, Windows 11","applicationCategory":"BusinessApplication","inLanguage":"ja","image":"https://usagii.jp/apple-touch-icon.png","description":"予定のある日だけが一本に並ぶ、Windows 用の予定リスト・予定管理アプリ。無料・オフライン完結。","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}
 </script>
 <link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <link rel="icon" type="image/png" sizes="96x96" href="./favicon-96.png">
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
-<noscript><style>.rv{opacity:1;transform:none}</style></noscript>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --coral:#D85A30; --coral-deep:#B14422; --coral-soft:#F6DDD2;
-  --paper:#FAF8F6; --ink:#211D1A; --mist:#6E6862; --line:rgba(33,29,26,.12);
-  --card:#FFFFFF;
-  --disp:'Zen Maru Gothic','Hiragino Maru Gothic ProN',sans-serif;
-  --body:'Hiragino Sans','Yu Gothic UI','Segoe UI',sans-serif;
-  color-scheme:light dark; /* スクロールバー等の UA 部品もテーマに追従させる */
-}
-@media (prefers-color-scheme: dark){
-  :root{
-    --coral:#E8693F; --coral-deep:#F0865F; --coral-soft:#3A241A;
-    --paper:#1B1917; --ink:#ECE8E4; --mist:#A39C95; --line:rgba(236,232,228,.14);
-    --card:#252220;
+  *{box-sizing:border-box}
+  :root{color-scheme:light;--bg:#FBF1E7;--surface:#fff;--fg:#2A211B;--fg2:#5b524a;--fg-quote:#39312b;--fg-cap:#8a7f76;--link:#B14422}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#19140F;--surface:#241D16;--fg:#F2E9DF;--fg2:#c2b4a6;--fg-quote:#e0d5c9;--fg-cap:#9d9082;--link:#EE9B7C}}
+  :root[data-theme="dark"]{color-scheme:dark;--bg:#19140F;--surface:#241D16;--fg:#F2E9DF;--fg2:#c2b4a6;--fg-quote:#e0d5c9;--fg-cap:#9d9082;--link:#EE9B7C}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:'Hiragino Sans','Yu Gothic UI','Segoe UI',sans-serif;line-height:1.85;-webkit-font-smoothing:antialiased;font-feature-settings:"palt"}
+  a{color:#B14422;text-decoration:none}
+  ::selection{background:#FFD7C4}
+  @keyframes ub-hop{0%,20%,100%{transform:translateY(0) scale(1,1)}6%{transform:translateY(6px) scale(1.05,.93)}12%{transform:translateY(-28px) scale(.96,1.06)}}
+  @keyframes ub-float{from{transform:translateY(0)}to{transform:translateY(-12px)}}
+  [data-rv]{opacity:0;transform:translateY(26px) scale(.985);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+  [data-rv].in{opacity:1;transform:none}
+  summary{list-style:none;cursor:pointer}
+  summary::-webkit-details-marker{display:none}
+  .ub-faqmark{transition:transform .25s ease}
+  details[open] .ub-faqmark{transform:rotate(135deg)}
+  .ub-link{color:var(--link);font-weight:700;border-bottom:2px solid rgba(216,90,48,.3)}
+  .ub-link:hover{border-color:#D85A30}
+  @media (max-width:900px){
+    .ub-storygrid{grid-template-columns:1fr!important;gap:0!important}
+    .ub-stage{position:sticky!important;top:0!important;height:auto!important;order:-1!important;padding:16px 0 8px!important;background:linear-gradient(var(--bg) 78%,transparent)!important;z-index:2}
+    .ub-mockscale{transform:scale(.74);transform-origin:top center;margin-bottom:-120px}
+    .ub-steps{padding:0!important}
+    .ub-step{min-height:84vh!important;padding:0!important}
+    .ub-hide-sm{display:none!important}
   }
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.85;font-feature-settings:"palt";-webkit-font-smoothing:antialiased}
-a{color:var(--coral);text-decoration:none}
-a:hover{text-decoration:underline}
-:focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:6px}
-.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
-h1,h2,h3,.disp{font-family:var(--disp);font-weight:900;line-height:1.35;letter-spacing:.01em}
-.eyebrow{font-family:var(--disp);font-weight:700;font-size:14px;color:var(--coral);letter-spacing:.18em;margin-bottom:14px}
-.rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s ease}
-.rv.in{opacity:1;transform:none}
-
-/* ---------- hero ---------- */
-.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:24px 24px 110px}
-.hero::before{content:"";position:absolute;inset:-20% -20% auto;height:90%;background:radial-gradient(60% 60% at 50% 30%,var(--coral-soft),transparent 70%);z-index:-1}
-.hero .icon{width:128px;height:128px;border-radius:28px;animation:hop 5s cubic-bezier(.34,1.56,.5,1) .25s infinite}
-@keyframes hop{0%,22%,100%{transform:translateY(0) scale(1,1)}7%{transform:translateY(4px) scale(1.04,.94)}13%{transform:translateY(-22px) scale(.97,1.05)}}
-.hero .mark{font-family:var(--disp);font-weight:900;font-size:clamp(40px,7vw,64px);color:var(--coral);letter-spacing:.04em;margin-top:18px}
-.hero h1{font-size:clamp(26px,4.6vw,44px);margin-top:8px}
-.hero .sub{color:var(--mist);max-width:34em;margin:18px auto 34px;font-size:15.5px}
-.cta{display:inline-block;background:var(--coral);color:#fff;font-family:var(--disp);font-weight:700;font-size:17px;padding:16px 38px;border-radius:999px;box-shadow:0 8px 24px rgba(216,90,48,.35);transition:transform .2s ease,box-shadow .2s ease}
-.cta:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(216,90,48,.4);text-decoration:none}
-.cta-note{display:block;margin-top:14px;font-size:12.5px;color:var(--mist)}
-.scrollcue{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--mist);font-size:12px;letter-spacing:.2em}
-.scrollcue::after{content:"";display:block;width:1px;height:34px;background:var(--mist);margin:8px auto 0;animation:cue 1.8s ease infinite}
-@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-@media (max-height:700px){.scrollcue{display:none}}
-
-/* ---------- pain (つぶやき → statement へ繋ぐ) ---------- */
-.pain{padding:clamp(96px,18vh,220px) 0 0;text-align:center}
-.pain-title{font-size:clamp(20px,3.2vw,30px);margin-bottom:clamp(36px,6vh,58px)}
-.pain-lines{max-width:30em;margin:0 auto;display:flex;flex-direction:column;gap:clamp(26px,4.5vh,44px)}
-.pain-line{font-family:var(--disp);font-weight:700;font-size:clamp(15.5px,2.2vw,20px);color:var(--mist);line-height:1.7}
-.pain-line:nth-child(1){text-align:left}
-.pain-line:nth-child(2){text-align:right}
-.pain-line:nth-child(3){text-align:center}
-/* 出現アニメーション: 1行ずつ別方向から時間差でスライドイン */
-.pain-line.rv{transition:opacity .7s ease,transform .7s ease}
-.pain-line:nth-child(1).rv{transform:translateX(-30px)}
-.pain-line:nth-child(2).rv{transform:translateX(30px);transition-delay:.18s}
-.pain-line:nth-child(3).rv{transform:translateY(26px);transition-delay:.36s}
-.pain-line.rv.in{opacity:1;transform:none}
-/* 出現後は思考の泡のようにゆっくり漂う (行ごとに周期をずらす) */
-.pain-line.rv.in{animation:drift 7s ease-in-out 1.2s infinite alternate}
-.pain-line:nth-child(2).rv.in{animation-duration:8.5s;animation-delay:1.6s}
-.pain-line:nth-child(3).rv.in{animation-duration:9.5s;animation-delay:2s}
-@keyframes drift{from{transform:translateY(0)}to{transform:translateY(-7px)}}
-
-/* ---------- statement ---------- */
-/* セクション余白は vh が小さい環境でも潰れないよう px の下限を保証する */
-.statement{padding:clamp(96px,22vh,260px) 0;text-align:center}
-.statement .big{font-size:clamp(24px,4.4vw,42px)}
-.statement .ans{margin-top:26px;font-size:clamp(18px,2.6vw,24px);color:var(--coral)}
-
-/* ---------- scrollytelling ---------- */
-.story{position:relative}
-.story .grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-/* モックは右側・テキストは左側 (PC / スマホ共通) */
-.stage{order:2;position:sticky;top:0;height:100svh;display:flex;align-items:center;justify-content:center}
-.steps{order:1;padding:10vh 0}
-.step{min-height:92svh;display:flex;flex-direction:column;justify-content:center;max-width:26em}
-.step h2{font-size:clamp(24px,3.4vw,34px);margin-bottom:16px}
-.step p{color:var(--mist);font-size:15.5px}
-/* スマホ用にステージ内へ複製されるシーンテキスト (PC では非表示) */
-.scene-texts{display:none}
-
-/* ---------- app window (CSS 製モック / アプリの現行カードデザイン準拠) ---------- */
-.app{
-  --lbg:#f1efec;--cbg:#fff;--bg2:#e9e7e3;--tx:#1d1c1a;--tx2:#6c6a66;--tx3:#9d9b96;--bd:rgba(0,0,0,.12);
-  --ibg:#E6F1FB;--itx:#185FA5;--sun:#A32D2D;--sh:0 1px 3px rgba(0,0,0,.08);
-  --bw-bg:#B5D4F4;--bw-fg:#0C447C;--bp-bg:#9FE1CB;--bp-fg:#085041;
-  --bi-bg:#F7C1C1;--bi-fg:#791F1F;--bh-bg:#FAC775;--bh-fg:#633806;
-  width:348px;background:var(--lbg);color:var(--tx);border:1px solid var(--bd);border-radius:14px;
-  overflow:hidden;font-size:13px;box-shadow:0 24px 60px rgba(33,29,26,.18);
-  transition:background .6s ease,color .6s ease;
-}
-[data-scene="theme"] .app{
-  --lbg:#1d1c1a;--cbg:#2c2b29;--bg2:#3a3937;--tx:#e9e7e3;--tx2:#a9a7a2;--tx3:#7b7975;--bd:rgba(255,255,255,.16);
-  --ibg:#0C447C;--itx:#B5D4F4;--sun:#F09595;--sh:0 1px 3px rgba(0,0,0,.35);
-  --bw-bg:#0C447C;--bw-fg:#B5D4F4;--bp-bg:#085041;--bp-fg:#9FE1CB;
-  --bi-bg:#791F1F;--bi-fg:#F7C1C1;--bh-bg:#633806;--bh-fg:#FAC775;
-}
-.app .bar{display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-bottom:1px solid var(--bd)}
-.app .bar b{font-family:var(--disp);font-weight:700;font-size:12.5px;flex:1}
-.app .dot{width:9px;height:9px;border-radius:50%;background:var(--tx3);opacity:.5}
-/* クイック登録カード */
-.app .quick{display:flex;align-items:center;gap:6px;margin:8px 10px 4px;padding:7px 9px;background:var(--cbg);border-radius:10px;box-shadow:var(--sh);transition:background .6s ease}
-.app .qtitle{flex:1;border:1px solid var(--bd);border-radius:8px;padding:4px 10px;color:var(--tx3);font-size:11.5px;white-space:nowrap;overflow:hidden}
-.app .qbtn{border:1px solid var(--itx);background:var(--ibg);color:var(--itx);border-radius:8px;padding:3px 10px;font-size:11px;white-space:nowrap}
-/* セクション見出し (ピン留め / 検索) */
-.app .ph{display:flex;align-items:center;gap:5px;padding:3px 10px 1px;font-size:10.5px;color:var(--tx3)}
-.app .ph .nav{margin-left:auto;display:flex;gap:4px;align-items:center}
-.app .nbtn{border:1px solid var(--bd);border-radius:7px;padding:1px 8px;font-size:10.5px;color:var(--tx2)}
-.app .vseg{display:flex;gap:2px;background:var(--bg2);border-radius:7px;padding:2px;margin-right:2px}
-.app .vseg b{font-weight:600;font-size:10px;padding:1px 7px;border-radius:5px;color:var(--tx2)}
-.app .vseg b.on{background:var(--cbg);color:var(--tx);box-shadow:var(--sh)}
-.app .pins{padding:2px 0;transition:box-shadow .5s,transform .5s;border-radius:10px}
-[data-scene="pin"] .pins{box-shadow:0 0 0 3px var(--coral) inset;transform:scale(1.02)}
-.app .pinrow{display:flex;align-items:center;gap:7px;margin:2px 10px 5px;padding:4px 8px 4px 10px;background:var(--cbg);border-radius:9px;box-shadow:var(--sh);transition:background .6s ease}
-.app .pinrow .pic{color:#BA7517;font-size:11px}
-.app .pinrow .d{color:var(--tx2);font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap}
-.app .pinrow .t{flex:1;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.app .cnt{font-size:10px;padding:1px 8px;border-radius:999px;background:var(--lbg);color:var(--tx2);white-space:nowrap;transition:background .6s ease}
-/* 検索セクション (検索 + カテゴリをまとめて開閉) */
-.app .sect{border-bottom:1px solid var(--bd);box-shadow:0 2px 6px rgba(0,0,0,.05);padding-bottom:7px;position:relative}
-.app .srch{padding:2px 10px 6px}
-.app .search{display:block;border:1px solid var(--bd);border-radius:8px;padding:4px 10px;color:var(--tx3);font-size:11.5px}
-.app .chips{display:flex;gap:5px;padding:0 10px;flex-wrap:wrap}
-.app .chip{font-size:10.5px;padding:2px 9px;border-radius:999px;border:1px solid var(--bd);color:var(--tx2);transition:all .5s}
-.app .chip.on{background:var(--bg2);color:var(--tx);border-color:var(--bd)}
-.app .chip.c-w{background:var(--bw-bg);color:var(--bw-fg);border-color:var(--bw-fg)}
-.app .chip.c-p{background:var(--bp-bg);color:var(--bp-fg);border-color:var(--bp-fg)}
-.app .chip.c-i{background:var(--bi-bg);color:var(--bi-fg);border-color:var(--bi-fg)}
-.app .chip.c-h{background:var(--bh-bg);color:var(--bh-fg);border-color:var(--bh-fg)}
-/* カテゴリシーン: 「重要」だけ残して他はグレーに */
-[data-scene="cat"] .app .chip.on,
-[data-scene="cat"] .app .chip.c-w,[data-scene="cat"] .app .chip.c-p,[data-scene="cat"] .app .chip.c-h{background:transparent;color:var(--tx2);border-color:var(--bd)}
-/* リスト: 日付ヘッダ + カード行。右上に 予定|完了 タブ */
-.app .dh{position:relative;padding:8px 12px 4px;font-size:11.5px;font-weight:600;display:flex;gap:8px;align-items:center}
-.app .dh.sun{color:var(--sun)}
-/* 本日の日付ヘッダは行全体を青系で強調 (アプリ現行仕様) */
-.app .dh.now{background:var(--ibg);color:var(--itx)}
-.app .dh.now .today{background:var(--itx);color:var(--ibg)}
-.app .today{font-size:10px;background:var(--ibg);color:var(--itx);padding:1px 8px;border-radius:999px}
-.app .seg{margin-left:auto;display:flex;gap:2px;background:var(--bg2);border-radius:7px;padding:2px;transition:background .6s ease}
-.app .seg b{font-weight:600;font-size:10px;padding:1px 8px;border-radius:5px;color:var(--tx2)}
-.app .seg b.on{background:var(--cbg);color:var(--tx);box-shadow:var(--sh)}
-.app .row{display:flex;gap:8px;margin:0 10px 7px;padding:8px 10px 8px 11px;background:var(--cbg);border-radius:10px;box-shadow:var(--sh);align-items:center;transition:opacity .5s,background .6s ease}
-.app .cb{width:14px;height:14px;border:1.5px solid var(--tx3);border-radius:50%;flex:none}
-.app .tm{color:var(--tx2);font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap;margin-right:6px}
-.app .bdgs{display:inline;margin-left:6px}
-.app .bdg{display:inline-block;font-size:10px;padding:1px 8px;border-radius:999px;margin-right:3px;vertical-align:1px}
-.app .b-w{background:var(--bw-bg);color:var(--bw-fg)} .app .b-p{background:var(--bp-bg);color:var(--bp-fg)}
-.app .b-i{background:var(--bi-bg);color:var(--bi-fg)} .app .b-h{background:var(--bh-bg);color:var(--bh-fg)}
-[data-scene="pin"] .app .list,[data-scene="pin"] .app .sect,[data-scene="pin"] .app .quick{opacity:.45}
-[data-scene="cat"] .app .row:not(.has-imp){opacity:.18}
-.app .list,.app .sect,.app .quick{transition:opacity .5s,background .6s ease}
-
-/* ---------- try (インタラクティブデモ) ---------- */
-.try{padding:clamp(84px,18vh,220px) 0;text-align:center}
-.try h2{font-size:clamp(24px,4vw,38px)}
-.try-lead{color:var(--mist);font-size:15.5px;max-width:32em;margin:18px auto 30px}
-.try-note{margin:26px auto 0;max-width:32em;font-size:12.5px;color:var(--mist)}
-/* デモは .app モックと同じ見た目になるよう寸法・色を合わせている */
-.dm{
-  --lbg:#f1efec;--cbg:#fff;--bg2:#e9e7e3;--tx:#1d1c1a;--tx2:#6c6a66;--tx3:#9d9b96;--bd:rgba(0,0,0,.18);
-  --ibg:#E6F1FB;--itx:#185FA5;--sun:#A32D2D;--sat:#185FA5;--sh:0 1px 3px rgba(0,0,0,.08);
-  --bw-bg:#B5D4F4;--bw-fg:#0C447C;--bp-bg:#9FE1CB;--bp-fg:#085041;
-  --bi-bg:#F7C1C1;--bi-fg:#791F1F;--bh-bg:#FAC775;--bh-fg:#633806;
-  width:min(348px,100%);margin:0 auto;background:var(--lbg);color:var(--tx);font-family:var(--body);
-  border:1px solid var(--bd);border-radius:14px;overflow:hidden;position:relative;
-  font-size:13px;text-align:left;box-shadow:0 24px 60px rgba(33,29,26,.18);
-}
-@media (prefers-color-scheme:dark){
-  .dm{--lbg:#1d1c1a;--cbg:#2c2b29;--bg2:#3a3937;--tx:#e9e7e3;--tx2:#a9a7a2;--tx3:#7b7975;--bd:rgba(255,255,255,.2);
-    --ibg:#0C447C;--itx:#B5D4F4;--sun:#F09595;--sat:#85B7EB;--sh:0 1px 3px rgba(0,0,0,.35);
-    --bw-bg:#0C447C;--bw-fg:#B5D4F4;--bp-bg:#085041;--bp-fg:#9FE1CB;
-    --bi-bg:#791F1F;--bi-fg:#F7C1C1;--bh-bg:#633806;--bh-fg:#FAC775}
-}
-.dm button{font-family:inherit}
-.dm .bar2{display:flex;align-items:center;gap:6px;height:36px;padding:0 12px;border-bottom:1px solid var(--bd)}
-.dm .bar2 b{font-family:var(--disp);font-weight:700;font-size:12.5px;flex:1}
-.dm .dot{width:9px;height:9px;border-radius:50%;background:var(--tx3);opacity:.5}
-/* クイック登録カード */
-.dm-quick{display:flex;flex-direction:column;gap:5px;margin:8px 10px 4px;padding:7px 9px;background:var(--cbg);border-radius:10px;box-shadow:var(--sh)}
-.dm-qrow{display:flex;gap:6px;align-items:center}
-.dm-quick input[type="text"]{flex:1;min-width:0;border:1px solid var(--bd);border-radius:8px;height:28px;padding:0 10px;font-size:12px;background:var(--cbg);color:var(--tx);font-family:inherit}
-.dm-quick input[type="text"]::placeholder{color:var(--tx3)}
-.dm-more{display:none}
-.dm-quick.open .dm-more{display:flex;gap:6px;align-items:center;flex-wrap:wrap;animation:dm-in .18s ease}
-.dm-quick input[type="date"]{border:1px solid var(--bd);border-radius:8px;height:26px;padding:0 8px;font-size:11.5px;background:var(--cbg);color:var(--tx);font-family:inherit;color-scheme:light}
-@media (prefers-color-scheme:dark){.dm-quick input[type="date"]{color-scheme:dark}}
-.dm-add{border:1px solid var(--itx);background:var(--ibg);color:var(--itx);border-radius:8px;padding:4px 11px;font-size:11.5px;cursor:pointer;white-space:nowrap}
-.dm-add:disabled{opacity:.45;cursor:default}
-.dm-qtoday{border:1px solid var(--bd);background:transparent;color:var(--tx2);border-radius:8px;padding:4px 10px;font-size:11.5px;cursor:pointer;white-space:nowrap}
-/* セクション見出し (ピン留め / 検索) */
-.dm-ph{display:flex;align-items:center;gap:5px;padding:3px 10px 1px;font-size:10.5px;color:var(--tx3)}
-.dm-ph .tgl{border:none;background:none;color:var(--tx3);cursor:pointer;font-size:10px;padding:1px 4px}
-.dm-ph .nav{margin-left:auto;display:flex;gap:4px;align-items:center}
-.dm-nbtn{border:1px solid var(--bd);background:transparent;color:var(--tx2);border-radius:7px;padding:1px 9px;font-size:10.5px;cursor:pointer}
-/* ピン留め */
-.dm-pins{padding-top:2px}
-.dm-pinrow{display:flex;align-items:center;gap:7px;margin:2px 10px 5px;padding:4px 5px 4px 10px;background:var(--cbg);border-radius:9px;box-shadow:var(--sh);cursor:pointer}
-.dm-pic{color:#BA7517;display:flex;align-items:center}
-.dm-pd{color:var(--tx2);font-size:11px;white-space:nowrap;font-variant-numeric:tabular-nums}
-.dm-pt{flex:1;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.dm-cnt{font-size:10px;padding:1px 8px;border-radius:999px;background:var(--lbg);color:var(--tx2);white-space:nowrap}
-.dm-cnt.tdy{background:var(--ibg);color:var(--itx)}
-.dm-cnt.over{background:#FCEBEB;color:#A32D2D}
-@media (prefers-color-scheme:dark){.dm-cnt.over{background:#501313;color:#F09595}}
-.dm-unpin{border:none;background:none;color:var(--tx3);font-size:11px;cursor:pointer;padding:2px 5px}
-/* 検索セクション (検索 + カテゴリをまとめて開閉) */
-.dm-sect{border-bottom:1px solid var(--bd);box-shadow:0 2px 6px rgba(0,0,0,.05);padding-bottom:7px;position:relative;z-index:4;background:var(--lbg)}
-.dm-srch{padding:2px 10px 6px}
-.dm-srch input{width:100%;border:1px solid var(--bd);border-radius:8px;height:26px;padding:0 10px;font-size:11.5px;background:var(--cbg);color:var(--tx);font-family:inherit}
-.dm-srch input::placeholder{color:var(--tx3)}
-.dm-chips{display:flex;gap:5px;padding:0 10px;flex-wrap:wrap}
-.dm-chip{font-size:10.5px;padding:2px 9px;border-radius:999px;border:1px solid var(--bd);background:transparent;color:var(--tx2);cursor:pointer}
-.dm-chip.on{background:var(--bg2);color:var(--tx)}
-.dm-chip.c-w.col{background:var(--bw-bg);color:var(--bw-fg);border-color:var(--bw-fg)}
-.dm-chip.c-p.col{background:var(--bp-bg);color:var(--bp-fg);border-color:var(--bp-fg)}
-.dm-chip.c-i.col{background:var(--bi-bg);color:var(--bi-fg);border-color:var(--bi-fg)}
-.dm-chip.c-h.col{background:var(--bh-bg);color:var(--bh-fg);border-color:var(--bh-fg)}
-/* リスト (右上に 予定|完了 タブ) */
-.dm-listwrap{position:relative}
-.dm-seg{position:absolute;top:6px;right:10px;z-index:3;display:flex;gap:2px;background:var(--bg2);border-radius:8px;padding:2px}
-.dm-seg button{border:none;background:transparent;font-size:10.5px;padding:2px 9px;border-radius:6px;color:var(--tx2);cursor:pointer;font-weight:600}
-.dm-seg button.on{background:var(--cbg);color:var(--tx);box-shadow:var(--sh)}
-/* リストは固定高さ (項目数が減っても窓の大きさを変えない)。中身は内側でスクロール */
-.dm-list{position:relative;height:430px;overflow-y:auto;overscroll-behavior:contain;
-  scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
-.dm-list::-webkit-scrollbar{width:7px}
-.dm-list::-webkit-scrollbar-thumb{background:var(--bd);border-radius:4px}
-.dm-list::-webkit-scrollbar-track{background:transparent}
-.dm-dh{position:sticky;top:0;z-index:2;background:var(--lbg);padding:9px 100px 5px 12px;font-size:11.5px;font-weight:600;display:flex;gap:8px;align-items:center}
-.dm-dh.sun{color:var(--sun)}
-.dm-dh.sat{color:var(--sat)}
-.dm-today{font-size:10px;background:var(--ibg);color:var(--itx);padding:1px 8px;border-radius:999px}
-.dm-row{display:flex;gap:8px;margin:0 10px 7px;padding:8px 5px 8px 11px;background:var(--cbg);border-radius:10px;box-shadow:var(--sh);align-items:center;
-  scroll-margin-top:34px} /* ジャンプ時に stuck した日付ヘッダの裏に隠れないように */
-.dm-row.ck{opacity:.55}
-.dm-row.ck .dm-tt{text-decoration:line-through}
-.dm-row[draggable]{cursor:grab}
-.dm-row.dragging{opacity:.4;cursor:grabbing}
-.dm-day.drop-on{background:var(--ibg);border-radius:8px}
-.dm-main{flex:1;min-width:0}
-.dm-tm{color:var(--tx2);font-size:11px;white-space:nowrap;font-variant-numeric:tabular-nums;margin-right:6px}
-.dm-tt{font-size:13px}
-.dm-bdg{display:inline-block;font-size:10px;padding:1px 8px;border-radius:999px;margin-left:5px;vertical-align:1px;border:none;cursor:pointer}
-.dm-bdg.c-w{background:var(--bw-bg);color:var(--bw-fg)}
-.dm-bdg.c-p{background:var(--bp-bg);color:var(--bp-fg)}
-.dm-bdg.c-i{background:var(--bi-bg);color:var(--bi-fg)}
-.dm-bdg.c-h{background:var(--bh-bg);color:var(--bh-fg)}
-.dm-row input[type="checkbox"]{appearance:none;-webkit-appearance:none;width:15px;height:15px;margin:0;padding:0;flex:none;border:1.5px solid var(--tx3);border-radius:50%;background:transparent;cursor:pointer;position:relative;transition:background-color .15s,border-color .15s}
-.dm-row input[type="checkbox"]:hover{border-color:var(--itx)}
-.dm-row input[type="checkbox"]:checked{background:var(--itx);border-color:var(--itx)}
-.dm-row input[type="checkbox"]:checked::after{content:"";position:absolute;left:3.5px;top:1px;width:4px;height:8px;border:solid var(--cbg);border-width:0 2px 2px 0;transform:rotate(45deg)}
-.dm-pinb{border:none;background:none;color:var(--tx3);cursor:pointer;padding:2px 5px;display:flex;align-items:center}
-.dm-pinb.on{color:#BA7517}
-.dm-emp{margin:0 10px 7px;padding:9px 12px;font-size:11.5px;color:var(--tx3);border:1px dashed var(--bd);border-radius:10px}
-.dm-row.new{animation:dm-in .3s cubic-bezier(.2,1,.35,1),dm-glow 1.2s ease-out}
-.dm-row.flash{animation:dm-glow 1.2s ease-out}
-@keyframes dm-in{from{opacity:0;transform:translateY(8px)}}
-@keyframes dm-glow{0%,25%{background-color:var(--ibg)}100%{background-color:var(--cbg)}}
-.dm-toast{position:absolute;bottom:10px;left:50%;transform:translate(-50%,6px);background:var(--tx);color:var(--lbg);font-size:11.5px;padding:5px 14px;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;white-space:nowrap;z-index:5}
-.dm-toast.show{opacity:1;transform:translate(-50%,0)}
-/* 日|週|月 切替 */
-.dm-vseg{display:flex;gap:2px;background:var(--bg2);border-radius:7px;padding:2px;margin-right:2px}
-.dm-vseg button{border:none;background:transparent;font-size:10px;padding:1px 7px;border-radius:5px;color:var(--tx2);cursor:pointer;font-weight:600}
-.dm-vseg button.on{background:var(--cbg);color:var(--tx);box-shadow:var(--sh)}
-/* 本日の日付ヘッダは行全体を青系で強調 */
-.dm-dh.now{background:var(--ibg)}
-.dm-dh.now>span:first-child{color:var(--itx)}
-.dm-dh.now .dm-today{background:var(--itx);color:var(--ibg)}
-/* ジャンプ先ヘッダ: ふわっと消えるハイライト */
-.dm-dh.jflash{animation:dm-hglow 1.2s ease-out}
-@keyframes dm-hglow{0%,25%{background-color:var(--ibg)}100%{background-color:var(--lbg)}}
-/* 日付ヘッダと直下のカードの余白 */
-.dm-dh+.dm-row,.dm-dh+.dm-emp{margin-top:5px}
-/* チェック切替時のスライド退場 (完了へ = 右 / 戻す = 左) */
-.dm-row.outr{animation:dm-out-r .26s ease forwards;pointer-events:none}
-.dm-row.outl{animation:dm-out-l .26s ease forwards;pointer-events:none}
-@keyframes dm-out-r{to{opacity:0;transform:translateX(48px)}}
-@keyframes dm-out-l{to{opacity:0;transform:translateX(-48px)}}
-/* 週ビュー */
-.dm-vhead{padding:9px 100px 5px 12px;font-size:11.5px;font-weight:600;white-space:nowrap}
-.dm-wkg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:0 8px 8px}
-.dm-wkc{display:flex;flex-direction:column;gap:3px;min-width:0}
-.dm-wkh{border:none;background:var(--cbg);box-shadow:var(--sh);border-radius:7px;padding:3px 0 2px;display:flex;flex-direction:column;align-items:center;cursor:pointer;font-family:inherit;color:var(--tx)}
-.dm-wkh .d{font-size:11.5px;font-weight:600;line-height:1.1}
-.dm-wkh .w{font-size:8.5px;color:var(--tx3)}
-.dm-wkh.sun .d,.dm-wkh.sun .w{color:var(--sun)}
-.dm-wkh.sat .d,.dm-wkh.sat .w{color:var(--sat)}
-.dm-wkh.now{background:var(--ibg)}
-.dm-wkh.now .d,.dm-wkh.now .w{color:var(--itx)}
-.dm-wkchip{border:none;border-radius:5px;background:var(--cbg);box-shadow:var(--sh);color:var(--tx);font-size:8.5px;line-height:1.35;padding:2px 3px;text-align:left;cursor:pointer;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-family:inherit;min-width:0}
-.dm-wkchip.ck{opacity:.55;text-decoration:line-through}
-/* 月ビュー */
-.dm-mowd{display:grid;grid-template-columns:repeat(7,1fr);padding:0 8px 2px;font-size:9px;color:var(--tx3);text-align:center}
-.dm-mowd .sun{color:var(--sun)}
-.dm-mowd .sat{color:var(--sat)}
-.dm-mog{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:0 8px 8px}
-.dm-moc{border:none;background:var(--cbg);box-shadow:var(--sh);border-radius:7px;padding:2px;display:flex;flex-direction:column;gap:1px;cursor:pointer;font-family:inherit;color:var(--tx);min-width:0;min-height:46px;overflow:hidden;text-align:left}
-.dm-moc.out{opacity:.4}
-.dm-moc.today{background:var(--ibg)}
-.dm-mon{font-size:9px;font-weight:600;text-align:center;line-height:1.2}
-.dm-mon.sun{color:var(--sun)}
-.dm-mon.sat{color:var(--sat)}
-.dm-mon.now{color:var(--itx)}
-.dm-mochip{font-size:7.5px;line-height:1.3;border-radius:3px;padding:0 2px;background:var(--lbg);color:var(--tx2);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.dm-mochip.ck,.dm-moc .ck{opacity:.55;text-decoration:line-through}
-.dm-momore{font-size:7.5px;color:var(--tx3);text-align:center}
-/* 週・月チップのカテゴリ色 */
-.dm-wkchip.c-w,.dm-mochip.c-w{background:var(--bw-bg);color:var(--bw-fg)}
-.dm-wkchip.c-p,.dm-mochip.c-p{background:var(--bp-bg);color:var(--bp-fg)}
-.dm-wkchip.c-i,.dm-mochip.c-i{background:var(--bi-bg);color:var(--bi-fg)}
-.dm-wkchip.c-h,.dm-mochip.c-h{background:var(--bh-bg);color:var(--bh-fg)}
-/* iOS Safari は 16px 未満の入力欄でフォーカス時に強制ズームするため、タッチ端末のみ引き上げる */
-@media (hover:none) and (pointer:coarse){
-  .dm-quick input[type="text"],.dm-quick input[type="date"],.dm-srch input{font-size:16px}
-}
-
-/* ---------- facts ---------- */
-.facts{padding:clamp(84px,18vh,220px) 0}
-.facts .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.fact{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:30px 26px}
-.fact b{font-family:var(--disp);font-weight:900;font-size:22px;color:var(--coral);display:block;margin-bottom:8px}
-.fact span{font-size:13px;color:var(--mist)}
-/* カードを順番に出す */
-.facts .fact:nth-child(2).rv{transition-delay:.1s}
-.facts .fact:nth-child(3).rv{transition-delay:.2s}
-.facts .fact:nth-child(4).rv{transition-delay:.3s}
-/* セキュリティ訴求カードは少しだけ強調 */
-.fact-hl{border:1.5px solid var(--coral);box-shadow:0 4px 18px rgba(216,90,48,.12)}
-
-/* ---------- local (データはPCの中) ---------- */
-.local{padding:clamp(76px,16vh,210px) 0;text-align:center}
-.local .big{font-size:clamp(24px,4.4vw,42px)}
-.local .lead{color:var(--mist);font-size:15.5px;max-width:32em;margin:22px auto 0}
-.local-points{list-style:none;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:30px}
-.local-points li{font-family:var(--disp);font-weight:700;font-size:13.5px;color:var(--coral);border:1.5px solid var(--coral);border-radius:999px;padding:7px 18px}
-.local-link{margin-top:26px;font-size:13.5px}
-
-/* ---------- gov (導入にあたって) ---------- */
-.gov{padding:clamp(76px,16vh,210px) 0}
-.gov .eyebrow{text-align:center}
-.gov h2{font-size:clamp(22px,3.6vw,34px);text-align:center}
-.gov-body{max-width:620px;margin:30px auto 0;font-size:14.5px;color:var(--mist)}
-.gov-body p+p{margin-top:18px}
-.gov-body b{color:var(--ink)}
-.gov-note{font-size:13px;margin-top:22px}
-
-/* ---------- download ---------- */
-.dl{padding:clamp(76px,16vh,210px) 0;text-align:center}
-.dl h2{font-size:clamp(28px,4vw,40px);margin-bottom:30px}
-.req{margin:46px auto 0;max-width:620px;text-align:left;font-size:14px;color:var(--mist)}
-.req dt{font-weight:600;color:var(--ink);margin-top:18px}
-.req dd{margin-top:4px}
-.dl-note{margin:34px auto 0;max-width:620px;font-size:13px;color:var(--mist)}
-
-/* ---------- footer ---------- */
-footer{border-top:1px solid var(--line);font-size:12.5px;color:var(--mist);display:flex;gap:18px;flex-wrap:wrap;align-items:center}
-/* .wrap の padding ショートハンドに上下余白が潰されないよう longhand で指定 */
-footer.wrap{padding-top:40px;padding-bottom:56px}
-footer .mk{font-family:var(--disp);font-weight:900;color:var(--coral)}
-
-/* ---------- responsive / motion ---------- */
-/* 背の低いデスクトップ画面ではモック (高さ約685px) が 100svh に収まるよう縮小 */
-@media (min-width:881px) and (max-height:760px){.app{zoom:.85}}
-@media (min-width:881px) and (max-height:620px){.app{zoom:.72}}
-@media (max-width:880px){
-  /* 全体に余白を広めに取る (上下はセクション側の指定を維持) */
-  .wrap{padding-left:32px;padding-right:32px}
-  /* スマホ: 各シーンを「テキスト + モック」丸ごと 1 画面にして
-     スクロールスナップで切り替える (テキストが UI にまたがらない) */
-  html{scroll-snap-type:y proximity}
-  .story .grid{display:block}
-  /* モックは画面に固定したまま、シーンとテキストだけがその場で切り替わる。
-     モック上端は常にテキスト帯の下 (34svh) に固定し、入り切らない分は下端をクロップ */
-  .stage{position:sticky;top:0;height:100svh;align-items:flex-start;justify-content:center;padding:34svh 0 0;overflow:hidden;
-    -webkit-mask-image:linear-gradient(to bottom,#000 86%,transparent);
-    mask-image:linear-gradient(to bottom,#000 86%,transparent)}
-  .app{zoom:.68}
-  .scene-texts{display:block;position:absolute;top:7svh;left:32px;right:32px}
-  .scene-text{position:absolute;left:0;right:0;top:0;opacity:0;transform:translateY(12px);transition:opacity .45s ease,transform .45s ease;pointer-events:none}
-  .stage[data-scene="list"] .scene-text[data-for="list"],
-  .stage[data-scene="pin"] .scene-text[data-for="pin"],
-  .stage[data-scene="cat"] .scene-text[data-for="cat"],
-  .stage[data-scene="theme"] .scene-text[data-for="theme"]{opacity:1;transform:none}
-  .scene-text h2{font-size:clamp(20px,5.4vw,28px);margin-bottom:10px}
-  .scene-text h2 br{display:none}
-  .scene-text p{font-size:13.5px;color:var(--mist)}
-  /* steps は不可視のスクロール量ドライバとして残す (シーン切替の判定に使用) */
-  .steps{margin-top:-100svh;padding:0;visibility:hidden}
-  .step{min-height:100svh;max-width:none;scroll-snap-align:start}
-  .statement,.try,.facts,.local,.gov,.dl{scroll-snap-align:start}
-  .facts .grid{grid-template-columns:1fr 1fr;gap:18px}
-  .statement,.local,.dl{padding-left:8px;padding-right:8px}
-}
-@media (max-width:560px){
-  .wrap{padding-left:26px;padding-right:26px}
-  .app{zoom:.62}
-  .scene-texts{left:26px;right:26px}
-  .scene-text h2{font-size:20px}
-  .scene-text p{font-size:13px}
-  .facts .grid{grid-template-columns:1fr;gap:16px}
-  .fact{padding:26px 24px}
-}
-/* 高さの低い画面ではテキストを詰めてモック開始位置を下げる */
-@media (max-width:880px) and (max-height:620px){
-  .stage{padding-top:40svh}
-  .scene-texts{top:4svh}
-  .scene-text .eyebrow{font-size:12px;margin-bottom:8px}
-  .scene-text h2{font-size:17px;margin-bottom:6px}
-  .scene-text p{font-size:12px}
-}
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto}
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .rv{opacity:1;transform:none}
-}
+  @media (max-width:560px){
+    .ub-pad{padding-left:20px!important;padding-right:20px!important}
+    .ub-grid2{grid-template-columns:1fr!important}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{animation:none!important;transition:none!important}
+    [data-rv]{opacity:1!important;transform:none!important}
+  }
+</style>
+<style>
+[data-uh0]:hover{background:rgba(255,255,255,.28) !important}
+[data-uh1]:hover{background:#FFE9DF !important}
+[data-uh2]:hover{transform:translateY(2px) !important;box-shadow:0 10px 0 0 rgba(0,0,0,.12) !important}
+[data-uh3]:hover{border-color:#fff !important;background:rgba(255,255,255,.1) !important}
+[data-uh4]:hover{transform:translateY(2px) !important;box-shadow:0 10px 0 0 rgba(0,0,0,.16) !important}
+[data-uh5]:hover{color:#fff !important}
+[data-uh6]:hover{color:#fff !important}
+[data-uh7]:hover{color:#fff !important}
+[data-uh8]:hover{color:#fff !important}
+[data-uh9]:hover{color:#fff !important}
 </style>
 </head>
 <body>
+<div style="overflow-x:clip">
 
-<!-- hero -->
-<header class="hero">
-  <svg class="icon" viewBox="0 0 1024 1024" role="img" aria-label="usagii のアイコン">
-    <rect width="1024" height="1024" rx="224" fill="#D85A30"/>
-    <g fill="#FFFFFF">
-      <rect x="352" y="156" width="136" height="384" rx="68" transform="rotate(-14 420 348)"/>
-      <rect x="536" y="156" width="136" height="384" rx="68" transform="rotate(14 604 348)"/>
-      <circle cx="512" cy="648" r="248"/>
-    </g>
-  </svg>
-  <div class="mark">usagii</div>
-  <h1>予定だけを、まっすぐ並べる。</h1>
-  <p class="sub">予定のある日だけが一本に並ぶ、Windows 予定リストです。</p>
-  <a class="cta" href="https://github.com/koutakagatsume/usagii/releases/latest/download/usagii-setup.exe">Windows 版をダウンロード</a>
-  <span class="cta-note" id="ver">無料 ・ 約 5MB ・ Windows 10 / 11(64bit)</span>
-  <div class="scrollcue">SCROLL</div>
+<header style="position:sticky;top:0;z-index:50;background:#D85A30">
+  <div class="ub-pad" style="max-width:1140px;margin:0 auto;padding:14px 26px;display:flex;align-items:center;gap:13px">
+    <svg viewBox="0 0 1024 1024" width="26" height="26" aria-hidden="true" style="flex:none"><g fill="#fff"><rect x="352" y="156" width="136" height="384" rx="68" transform="rotate(-14 420 348)"/><rect x="536" y="156" width="136" height="384" rx="68" transform="rotate(14 604 348)"/><circle cx="512" cy="648" r="248"/></g></svg>
+    <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:19px;color:#fff;letter-spacing:.02em">usagii</span>
+    <nav style="margin-left:auto;display:flex;align-items:center;gap:20px">
+      <a href="#try" class="ub-hide-sm" style="font-size:14px;font-weight:700;color:#FFE3D6">デモ</a>
+      <a href="#faq" class="ub-hide-sm" style="font-size:14px;font-weight:700;color:#FFE3D6">FAQ</a>
+      <button id="ubTheme" type="button" aria-label="テーマを切り替え" style="border:none;background:rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:999px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;flex:none" data-uh0><svg id="ubMoon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg id="ubSun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <a href="#download" style="font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:14px;color:#D85A30;background:#fff;padding:9px 20px;border-radius:999px;letter-spacing:.02em" data-uh1>ダウンロード</a>
+    </nav>
+  </div>
 </header>
 
-<!-- pain (つぶやき → statement へ繋ぐ) -->
-<section class="pain wrap">
-  <h2 class="pain-title disp rv">こんなお悩み、ありませんか?</h2>
-  <div class="pain-lines">
-    <p class="pain-line rv">「あの納品日、いつだっけ。」</p>
-    <p class="pain-line rv">「カレンダーに入れたはずなのに、見つからない。」</p>
-    <p class="pain-line rv">「共有カレンダーに載せるほどじゃない。<br>でも、どこに書こう。」</p>
+<section style="position:relative;background:#D85A30;color:#fff;text-align:center;padding:54px 26px 96px;overflow:hidden">
+  <div style="position:absolute;top:8%;left:8%;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.09);animation:ub-float 6s ease-in-out infinite alternate" aria-hidden="true"></div>
+  <div style="position:absolute;bottom:14%;right:10%;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.08);animation:ub-float 7.5s ease-in-out .5s infinite alternate" aria-hidden="true"></div>
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center">
+    <svg viewBox="0 0 1024 1024" width="124" height="124" aria-label="usagii のアイコン" style="animation:ub-hop 4.6s cubic-bezier(.34,1.56,.5,1) .3s infinite"><g fill="#fff"><rect x="352" y="156" width="136" height="384" rx="68" transform="rotate(-14 420 348)"/><rect x="536" y="156" width="136" height="384" rx="68" transform="rotate(14 604 348)"/><circle cx="512" cy="648" r="248"/></g></svg>
+    <p style="margin:18px 0 0;font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:14px;letter-spacing:.12em;color:#FFE3D6;background:rgba(255,255,255,.14);padding:7px 18px;border-radius:999px">無料 ・ オフライン完結 ・ Windows</p>
+    <h1 style="margin:18px 0 0;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(42px,9vw,88px);line-height:1.1;letter-spacing:.005em;color:#fff;text-wrap:balance">予定だけを、<br>まっすぐ。</h1>
+    <p style="margin:20px auto 0;max-width:26em;font-size:17px;color:#FFE9DF;text-wrap:pretty">カレンダーじゃない、リスト。予定のある日だけが、ぽんと一本に並ぶ Windows アプリ。</p>
+    <div style="margin:32px 0 0;display:flex;gap:14px;flex-wrap:wrap;justify-content:center">
+      <a href="#download" style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:18px;color:#D85A30;background:#fff;padding:17px 40px;border-radius:999px;box-shadow:0 12px 0 0 rgba(0,0,0,.12);letter-spacing:.02em" data-uh2>ダウンロード</a>
+      <a href="#try" style="font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:18px;color:#fff;background:transparent;padding:17px 32px;border-radius:999px;border:2.5px solid rgba(255,255,255,.6)" data-uh3>さわってみる</a>
+    </div>
+    <p style="margin:16px 0 0;font-size:13px;color:#FFD7C4">約 5MB ・ Windows 10 / 11(64bit)</p>
+  </div>
+  <svg viewBox="0 0 1440 80" preserveAspectRatio="none" style="position:absolute;left:0;right:0;bottom:-1px;width:100%;height:54px;display:block" aria-hidden="true"><path d="M0,80 L0,40 Q360,0 720,40 T1440,40 L1440,80 Z" style="fill:var(--bg)"/></svg>
+</section>
+
+<section class="ub-pad" data-rv style="max-width:780px;margin:0 auto;padding:clamp(56px,9vh,120px) 26px 0;text-align:center">
+  <p style="margin:0 0 clamp(30px,5vh,50px);font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(22px,3.4vw,32px);color:var(--fg)">こんなこと、ありませんか?</p>
+  <div style="display:flex;flex-direction:column;gap:18px;max-width:30em;margin:0 auto">
+    <p style="margin:0;align-self:flex-start;text-align:left;font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:clamp(15px,2vw,19px);color:var(--fg2);background:var(--surface);border-radius:22px 22px 22px 6px;padding:16px 22px;box-shadow:0 6px 18px rgba(42,33,27,.06)">「あの納品日、いつだっけ。」</p>
+    <p style="margin:0;align-self:flex-end;text-align:left;font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:clamp(15px,2vw,19px);color:var(--fg2);background:var(--surface);border-radius:22px 22px 6px 22px;padding:16px 22px;box-shadow:0 6px 18px rgba(42,33,27,.06)">「カレンダーに入れたのに、見つからない。」</p>
+    <p style="margin:0;align-self:flex-start;text-align:left;font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:clamp(15px,2vw,19px);color:var(--fg2);background:var(--surface);border-radius:22px 22px 22px 6px;padding:16px 22px;box-shadow:0 6px 18px rgba(42,33,27,.06)">「共有するほどじゃない。でも、どこに書こう。」</p>
   </div>
 </section>
 
-<!-- statement -->
-<section class="statement wrap">
-  <p class="big disp rv">カレンダーは、<br>空き時間まで見せてくる。</p>
-  <p class="ans disp rv">usagii が見せるのは、予定がある日だけ。</p>
+<section class="ub-pad" data-rv style="text-align:center;padding:clamp(80px,16vh,200px) 26px">
+  <p style="margin:0 auto;max-width:15em;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(28px,5.4vw,56px);line-height:1.22;color:var(--fg);text-wrap:balance">カレンダーは、空き時間まで見せてくる。</p>
+  <p style="margin:26px auto 0;display:inline-block;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(18px,2.8vw,27px);color:#fff;background:#D85A30;padding:10px 26px;border-radius:999px;transform:rotate(-1.5deg)">usagii が見せるのは、予定がある日だけ。</p>
 </section>
 
-<!-- scrollytelling -->
-<section class="story wrap" id="story">
-  <div class="grid">
-    <div class="stage" id="stage" data-scene="list">
-      <div class="app" aria-hidden="true">
-        <div class="bar"><b>usagii</b><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-        <div class="quick"><span class="qtitle">クイック登録(タイトルを入力)</span><span class="qbtn">登録</span></div>
-        <div class="pins">
-          <div class="ph">∧ ピン留め</div>
-          <div class="pinrow"><span class="pic">●</span><span class="d">6/23(火)</span><span class="t">車検</span><span class="cnt">あと13日</span></div>
-          <div class="pinrow"><span class="pic">●</span><span class="d">8/14(金)</span><span class="t">Aプロジェクト納品</span><span class="cnt">あと65日</span></div>
-        </div>
-        <div class="sect">
-          <div class="ph">∧ 検索<span class="nav"><span class="vseg"><b class="on">日</b><b>週</b><b>月</b></span><span class="nbtn">‹</span><span class="nbtn">今日</span><span class="nbtn">›</span></span></div>
-          <div class="srch"><span class="search">タイトルで検索</span></div>
-          <div class="chips">
-            <span class="chip on">すべて</span><span class="chip c-w">仕事</span><span class="chip c-p">私用</span><span class="chip c-i imp">重要</span><span class="chip c-h">家</span>
-          </div>
-        </div>
-        <div class="list">
-          <div class="dh now">6/10 (水) <span class="today">今日</span><span class="seg"><b class="on">予定</b><b>完了</b></span></div>
-          <div class="row"><span class="cb"></span><div><span class="tm">終日</span>粗大ゴミ申込<div class="bdgs"><span class="bdg b-h">家</span></div></div></div>
-          <div class="row"><span class="cb"></span><div><span class="tm">13:00-14:00</span>チーム定例<div class="bdgs"><span class="bdg b-w">仕事</span></div></div></div>
-          <div class="dh">6/11 (木)</div>
-          <div class="row has-imp"><span class="cb"></span><div><span class="tm">10:00-12:00</span>設計レビュー<div class="bdgs"><span class="bdg b-w">仕事</span><span class="bdg b-i">重要</span></div></div></div>
-          <div class="dh">6/12 (金)</div>
-          <div class="row has-imp"><span class="cb"></span><div><span class="tm">6/12 23:00 → 6/13 01:00</span>夜間メンテ立会い<div class="bdgs"><span class="bdg b-w">仕事</span><span class="bdg b-i">重要</span></div></div></div>
-          <div class="dh sun">6/14 (日)</div>
-          <div class="row"><span class="cb"></span><div><span class="tm">終日</span>父の日の買い物<div class="bdgs"><span class="bdg b-p">私用</span></div></div></div>
-        </div>
+<section id="features" style="background:var(--surface);border-top:3px solid var(--fg)">
+  <div class="ub-pad ub-storygrid" style="max-width:1140px;margin:0 auto;padding:0 26px;display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:start">
+    <div class="ub-steps" style="order:1;padding:8vh 0">
+      <div class="ub-step" data-scene="list" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
+        <span style="align-self:flex-start;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.06em;color:#fff;background:#86D9B9;color:#0d5b45;padding:5px 14px;border-radius:999px;margin:0 0 14px">01 リスト</span>
+        <h2 style="margin:0 0 16px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,3.6vw,40px);line-height:1.28;color:var(--fg)">予定がある日だけ、<br>まっすぐ。</h2>
+        <p style="margin:0;color:var(--fg2);font-size:16.5px;text-wrap:pretty">空白の日は出しません。日付はスクロールで上に貼り付き、「今日」ボタンでいつでも現在へ。週・月表示にもワンタップで切り替え。</p>
+      </div>
+      <div class="ub-step" data-scene="pin" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
+        <span style="align-self:flex-start;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.06em;background:#FFC25C;color:#6b4a00;padding:5px 14px;border-radius:999px;margin:0 0 14px">02 ピン留め</span>
+        <h2 style="margin:0 0 16px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,3.6vw,40px);line-height:1.28;color:var(--fg)">2ヶ月先の締切が、<br>ずっと見えてる。</h2>
+        <p style="margin:0;color:var(--fg2);font-size:16.5px;text-wrap:pretty">ピン留めした予定は一覧の最上部に固定。「あと N 日」のカウントダウンで、遠い締切も見失いません。</p>
+      </div>
+      <div class="ub-step" data-scene="cat" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
+        <span style="align-self:flex-start;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.06em;background:#93C5F0;color:#0c447c;padding:5px 14px;border-radius:999px;margin:0 0 14px">03 カテゴリ</span>
+        <h2 style="margin:0 0 16px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,3.6vw,40px);line-height:1.28;color:var(--fg)">色で分けて、<br>ぱっと絞る。</h2>
+        <p style="margin:0;color:var(--fg2);font-size:16.5px;text-wrap:pretty">予定には複数のカテゴリを付けられます。バッジをクリックすれば、その仲間だけにきゅっと絞り込み。</p>
+      </div>
+      <div class="ub-step" data-scene="theme" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
+        <span style="align-self:flex-start;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.06em;background:var(--fg);color:var(--surface);padding:5px 14px;border-radius:999px;margin:0 0 14px">04 テーマ</span>
+        <h2 style="margin:0 0 16px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,3.6vw,40px);line-height:1.28;color:var(--fg)">夜は、<br>ダークに。</h2>
+        <p style="margin:0;color:var(--fg2);font-size:16.5px;text-wrap:pretty">ライト・ダークの手動切替に加えて、OS の設定に合わせた自動切り替えにも対応しています。</p>
       </div>
     </div>
-    <div class="steps">
-      <div class="step" data-scene="list">
-        <p class="eyebrow">リスト</p>
-        <h2>予定がある日だけ、<br>時系列に。</h2>
-        <p>空白の日は表示しません。日付はスクロールに合わせて上に貼り付き、「今日」ボタンでいつでも現在へ戻れます。もちろん、週・月のカレンダー表示にもワンタップで切り替えられます。</p>
-      </div>
-      <div class="step" data-scene="pin">
-        <p class="eyebrow">ピン留め</p>
-        <h2>2ヶ月先の納品日が、<br>ずっと見えている。</h2>
-        <p>ピン留めした予定は一覧の最上部に固定。「あと N 日」のカウントダウンで、遠い締切を見失いません。</p>
-      </div>
-      <div class="step" data-scene="cat">
-        <p class="eyebrow">カテゴリ</p>
-        <h2>色で分けて、<br>一瞬で絞る。</h2>
-        <p>予定には複数のカテゴリを付けられます。バッジをクリックすれば、その仲間だけに絞り込み。</p>
-      </div>
-      <div class="step" data-scene="theme">
-        <p class="eyebrow">テーマ</p>
-        <h2>夜はダークテーマに。</h2>
-        <p>ライト・ダークの手動切替に加えて、OS の設定に合わせた自動切り替えにも対応しています。</p>
+    <div class="ub-stage" style="order:2;position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center">
+      <div class="ub-mockscale" style="padding:18px;background:var(--bg);border-radius:32px;border:3px solid var(--fg);box-shadow:10px 10px 0 0 #D85A30">
+        <usagii-appmock scene="list"></usagii-appmock>
       </div>
     </div>
   </div>
 </section>
 
-<!-- try (インタラクティブデモ) -->
-<section class="try wrap" id="try">
-  <p class="eyebrow rv">デモ</p>
-  <h2 class="rv">さわってみる。</h2>
-  <p class="try-lead rv">インストールの前に、ブラウザでひと足だけ。タイトルを入れて登録、チェックで完了、ピンで固定。基本はこれだけです。</p>
-  <div class="dm rv" id="dm">
-    <div class="bar2"><b>usagii</b><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-    <div class="dm-quick" id="dmQuick">
-      <div class="dm-qrow">
-        <input type="text" id="dmTitle" placeholder="クイック登録(タイトルを入力)" aria-label="タイトル">
-        <button class="dm-add" id="dmAdd" disabled>登録</button>
-      </div>
-      <div class="dm-more">
-        <input type="date" id="dmDate" aria-label="日付">
-        <button class="dm-qtoday" id="dmQToday" type="button" style="display:none">今日</button>
-        <span class="dm-chips" id="dmQCats" style="padding:0"></span>
-      </div>
-    </div>
-    <div class="dm-pins" id="dmPins"></div>
-    <div class="dm-sect">
-      <div class="dm-ph">
-        <button class="tgl" id="dmSectTgl" aria-label="検索表示の折りたたみ">∧</button><span id="dmSectLbl">検索</span>
-        <span class="nav">
-          <span class="dm-vseg" role="group" aria-label="表示の切替">
-            <button data-vw="day" class="on" aria-pressed="true">日</button>
-            <button data-vw="week" aria-pressed="false">週</button>
-            <button data-vw="month" aria-pressed="false">月</button>
-          </span>
-          <button class="dm-nbtn" id="dmPrev" aria-label="前へ">‹</button>
-          <button class="dm-nbtn" id="dmToday">今日</button>
-          <button class="dm-nbtn" id="dmNext" aria-label="次へ">›</button>
-        </span>
-      </div>
-      <div id="dmSectBody">
-        <div class="dm-srch"><input type="text" id="dmQuery" placeholder="タイトルで検索" aria-label="タイトルで検索"></div>
-        <div class="dm-chips" id="dmChips"></div>
-      </div>
-    </div>
-    <div class="dm-listwrap">
-      <div class="dm-seg" role="group" aria-label="予定の表示切替">
-        <button class="on" data-tab="active" aria-pressed="true">予定</button>
-        <button data-tab="done" aria-pressed="false">完了</button>
-      </div>
-      <div class="dm-list" id="dmList"></div>
-    </div>
-    <div class="dm-toast" id="dmToast" role="status"></div>
+<section id="try" style="background:#D85A30;color:#fff;padding:clamp(72px,13vh,160px) 26px;text-align:center">
+  <div class="ub-pad" data-rv style="max-width:760px;margin:0 auto">
+    <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.1em;color:#fff;background:rgba(255,255,255,.16);padding:6px 16px;border-radius:999px">デモ</span>
+    <h2 style="margin:16px 0 0;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(30px,5vw,52px);color:#fff">さわってみる。</h2>
+    <p style="margin:16px auto 0;max-width:30em;color:#FFE9DF;font-size:16.5px;text-wrap:pretty">インストールの前に、ブラウザでひと足だけ。タイトルを入れて登録、チェックで完了、ピンで固定。基本はこれだけ。</p>
   </div>
-  <p class="try-note rv">ブラウザの中だけで動く簡易デモです。<br>入力した内容はどこにも保存及び送信されません。</p>
+  <div class="ub-pad" data-rv style="margin:36px auto 0;width:min(388px,100%);padding:20px;background:var(--surface);border-radius:28px;box-shadow:0 24px 60px rgba(42,33,27,.28)">
+    <usagii-demo></usagii-demo>
+  </div>
+  <p data-rv style="margin:22px auto 0;max-width:30em;font-size:13px;color:#FFD7C4">ブラウザの中だけで動く簡易デモです。入力した内容はどこにも保存・送信されません。</p>
 </section>
 
-<!-- facts -->
-<section class="facts wrap">
-  <div class="grid">
-    <div class="fact rv"><b>呼べば、一瞬。</b><span>トレイに常駐しているので、使いたいときにワンクリックですぐ開きます。起動を待つ時間はありません。</span></div>
-    <div class="fact fact-hl rv"><b>オフライン完結</b><span>データはすべて PC の中だけに保存。外部への通信・送信は一切なく、アカウント登録も不要。あなたの予定が PC の外に出ることはありません。</span></div>
-    <div class="fact rv"><b>更新もかんたん</b><span>新しいバージョンはこのページから。インストーラを実行するだけで、予定データはそのまま引き継がれます。</span></div>
-    <div class="fact rv"><b>ずっと無料</b><span>フリーソフトとして公開しています。</span></div>
+<section class="ub-pad" style="max-width:1140px;margin:0 auto;padding:clamp(72px,13vh,160px) 26px 0">
+  <div data-rv style="text-align:center;max-width:680px;margin:0 auto 46px">
+    <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.1em;color:#fff;background:#D85A30;padding:6px 16px;border-radius:999px">利用者の声</span>
+    <h2 style="margin:16px 0 0;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,4.4vw,44px);color:var(--fg);text-wrap:balance">みんな、静かに続けてる。</h2>
+  </div>
+  <div class="ub-grid2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(262px,1fr));gap:22px">
+    <figure data-rv style="margin:0;background:var(--surface);border-radius:28px 28px 28px 8px;padding:28px 26px;box-shadow:0 10px 26px rgba(42,33,27,.08)">
+      <blockquote style="margin:0 0 18px;font-size:15.5px;color:var(--fg-quote);line-height:1.85;text-wrap:pretty">終わったら消す、じゃなくて「今日やること」だけが目に入る。これが想像以上に効きました。</blockquote>
+      <figcaption style="display:flex;align-items:center;gap:11px"><span style="width:38px;height:38px;border-radius:50%;background:#86D9B9;color:#0d5b45;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:16px">W</span><span style="font-size:13px;color:var(--fg-cap);line-height:1.4">フリーランス<br>Web 制作</span></figcaption>
+    </figure>
+    <figure data-rv style="margin:0;background:var(--surface);border-radius:28px 28px 28px 8px;padding:28px 26px;box-shadow:0 10px 26px rgba(42,33,27,.08)">
+      <blockquote style="margin:0 0 18px;font-size:15.5px;color:var(--fg-quote);line-height:1.85;text-wrap:pretty">2ヶ月先の契約更新をピン留め。「あと 45 日」がいつも見えているので、もう忘れません。</blockquote>
+      <figcaption style="display:flex;align-items:center;gap:11px"><span style="width:38px;height:38px;border-radius:50%;background:#FFC25C;color:#6b4a00;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:16px">K</span><span style="font-size:13px;color:var(--fg-cap);line-height:1.4">個人事業主</span></figcaption>
+    </figure>
+    <figure data-rv style="margin:0;background:var(--surface);border-radius:28px 28px 28px 8px;padding:28px 26px;box-shadow:0 10px 26px rgba(42,33,27,.08)">
+      <blockquote style="margin:0 0 18px;font-size:15.5px;color:var(--fg-quote);line-height:1.85;text-wrap:pretty">外部に通信しないのが決め手でした。検証環境で確認してから、チームへ展開しています。</blockquote>
+      <figcaption style="display:flex;align-items:center;gap:11px"><span style="width:38px;height:38px;border-radius:50%;background:#93C5F0;color:#0c447c;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:16px">S</span><span style="font-size:13px;color:var(--fg-cap);line-height:1.4">社内 SE<br>情報システム</span></figcaption>
+    </figure>
   </div>
 </section>
 
-<!-- local -->
-<section class="local wrap" id="local">
-  <p class="eyebrow rv">プライバシー</p>
-  <p class="big disp rv">あなたの予定は、<br>あなたの PC から出ない。</p>
-  <p class="lead rv">usagii にサーバはありません。予定・カテゴリ・設定はすべて手元の PC に保存され、開発者を含む誰かに送信されることはありません。</p>
-  <ul class="local-points rv">
-    <li>クラウド送信なし</li>
-    <li>アカウント不要</li>
-    <li>外部への通信なし</li>
-  </ul>
-  <p class="local-link rv"><a href="./privacy.html">プライバシー・免責事項 →</a></p>
-</section>
-
-<!-- gov (導入にあたって) -->
-<section class="gov wrap" id="gov">
-  <p class="eyebrow rv">導入にあたって</p>
-  <h2 class="rv">セキュリティを最優先に。<br>それでも、導入前の検証を。</h2>
-  <div class="gov-body rv">
-    <p>usagii は、セキュリティ要件の厳しい企業環境でも使えることを目指して設計しています。外部との通信は一切行わず、アカウント登録もなく、予定データやテレメトリが PC の外へ送信されることはありません。これは宣言だけではなく、<a href="./verify.html">ご自身の環境で実測検証する手順</a>を公開しています(通信モニタでの確認、ファイアウォールで遮断したままの運用など)。</p>
-    <p>不具合の可能性は、usagii に限らずあらゆるソフトウェアにあるものです。そのうえで usagii は、セキュリティと品質の担保に最大限努め、継続的に改善を続けています。それでも業務でお使いいただく際は、<b>導入前に検証環境での動作確認・評価を必ず実施してください。</b></p>
-    <p>自動アップデート機構は意図的に搭載していません。アプリが自動的に最新版へ置き換わることはなく、更新は<b>バージョンを指定したインストーラを手動で実行したときだけ</b>行われます。組織として許可するバージョンを固定し、配布や更新のタイミングを管理側で制御できます。各バージョンのインストーラは <a href="https://github.com/koutakagatsume/usagii/releases">Releases ページ</a>にすべて残ります。</p>
-    <p><b>サポートポリシー</b>: サポート対象は常に最新リリースです。不具合やセキュリティ上の問題が判明した場合は修正版を公開し、<a href="./changelog.html">更新履歴</a>でお知らせします。リリースは、依存ライブラリの既知脆弱性検査を通過したビルドのみを公開します。</p>
-    <p class="gov-note">※ コード署名を行っていないため、初回実行時に SmartScreen の確認が表示されることがあります(<a href="./privacy.html#smartscreen">表示された場合の手順</a>)。配布元は GitHub の公開リポジトリのみです。</p>
+<section class="ub-pad" style="max-width:1140px;margin:0 auto;padding:clamp(72px,13vh,160px) 26px">
+  <div class="ub-grid2" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(244px,1fr));gap:20px">
+    <div data-rv style="background:var(--surface);border:2.5px solid var(--fg);border-radius:26px;padding:28px 26px;box-shadow:6px 6px 0 0 #FFC25C">
+      <b style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:21px;color:var(--fg);display:block;margin:0 0 10px">呼べば、一瞬。</b>
+      <span style="font-size:14px;color:var(--fg2);text-wrap:pretty">トレイに常駐しているので、使いたいときにワンクリックですぐ開きます。起動を待つ時間はありません。</span>
+    </div>
+    <div data-rv style="background:#D85A30;border:2.5px solid var(--fg);border-radius:26px;padding:28px 26px;box-shadow:6px 6px 0 0 var(--fg);color:#fff">
+      <b style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:21px;color:#fff;display:block;margin:0 0 10px">オフライン完結</b>
+      <span style="font-size:14px;color:#FFE9DF;text-wrap:pretty">データはすべて PC の中だけに保存。外部への通信・送信は一切なく、アカウント登録も不要です。</span>
+    </div>
+    <div data-rv style="background:var(--surface);border:2.5px solid var(--fg);border-radius:26px;padding:28px 26px;box-shadow:6px 6px 0 0 #86D9B9">
+      <b style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:21px;color:var(--fg);display:block;margin:0 0 10px">更新もかんたん</b>
+      <span style="font-size:14px;color:var(--fg2);text-wrap:pretty">新しいバージョンはこのページから。インストーラを実行するだけで、予定データはそのまま引き継がれます。</span>
+    </div>
+    <div data-rv style="background:var(--surface);border:2.5px solid var(--fg);border-radius:26px;padding:28px 26px;box-shadow:6px 6px 0 0 #93C5F0">
+      <b style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:21px;color:var(--fg);display:block;margin:0 0 10px">ずっと無料</b>
+      <span style="font-size:14px;color:var(--fg2);text-wrap:pretty">フリーソフトとして公開しています。機能制限や課金はありません。</span>
+    </div>
   </div>
 </section>
 
-<!-- download -->
-<section class="dl wrap" id="download">
-  <h2 class="rv">さあ、はじめる。</h2>
-  <p class="rv"><a class="cta" href="https://github.com/koutakagatsume/usagii/releases/latest/download/usagii-setup.exe">Windows 版をダウンロード</a></p>
-  <dl class="req rv">
-    <dt>動作要件</dt>
-    <dd>Windows 10 / 11(64bit)</dd>
-  </dl>
-  <p class="dl-note rv">更新するときも、新しいインストーラを実行するだけ。予定データはそのまま引き継がれます。変更点は<a href="./changelog.html">更新履歴</a>、過去のバージョンは <a href="https://github.com/koutakagatsume/usagii/releases">Releases ページ</a>からどうぞ。</p>
+<section style="background:#D85A30;color:#fff;position:relative">
+  <div class="ub-pad" data-rv style="max-width:760px;margin:0 auto;padding:clamp(72px,13vh,160px) 26px;text-align:center">
+    <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.1em;background:rgba(255,255,255,.16);padding:6px 16px;border-radius:999px">プライバシー</span>
+    <p style="margin:18px 0 0;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,5vw,48px);line-height:1.24;color:#fff;text-wrap:balance">あなたの予定は、<br>あなたの PC から出ない。</p>
+    <p style="margin:20px auto 0;max-width:32em;color:#FFE9DF;font-size:16.5px;text-wrap:pretty">usagii にサーバはありません。予定・カテゴリ・設定はすべて手元の PC に保存され、誰かに送信されることはありません。</p>
+    <div style="margin:28px auto 0;display:flex;justify-content:center;gap:10px;flex-wrap:wrap">
+      <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13.5px;color:#D85A30;background:#fff;border-radius:999px;padding:8px 18px">クラウド送信なし</span>
+      <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13.5px;color:#D85A30;background:#fff;border-radius:999px;padding:8px 18px">アカウント不要</span>
+      <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13.5px;color:#D85A30;background:#fff;border-radius:999px;padding:8px 18px">外部への通信なし</span>
+    </div>
+    <p style="margin:22px 0 0;font-size:14px"><a href="./privacy.html" style="color:#fff;font-weight:700;border-bottom:2px solid rgba(255,255,255,.5)">プライバシー・免責事項 →</a></p>
+  </div>
 </section>
 
-<footer class="wrap">
-  <span class="mk">usagii</span>
-  <span>© 2026 usagii project</span>
-  <a href="https://github.com/koutakagatsume/usagii">GitHub</a>
-  <a href="./changelog.html">更新履歴</a>
-  <a href="./privacy.html">プライバシー・免責事項</a>
-  <a href="./verify.html">通信の検証方法</a>
-  <a href="./usagi.html">名前の由来</a>
+<section id="faq" class="ub-pad" style="padding:clamp(72px,13vh,160px) 26px">
+  <div style="max-width:720px;margin:0 auto">
+    <div data-rv style="text-align:center;margin:0 0 42px">
+      <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.1em;color:#fff;background:#D85A30;padding:6px 16px;border-radius:999px">FAQ</span>
+      <h2 style="margin:16px 0 0;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,4.4vw,44px);color:var(--fg)">よくある質問。</h2>
+    </div>
+    <div data-rv>
+      <details style="border:2.5px solid var(--fg);border-radius:20px;background:var(--surface);padding:0 22px;margin:0 0 14px">
+        <summary style="display:flex;align-items:center;gap:14px;padding:18px 0;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:16.5px;color:var(--fg)"><span style="flex:1">本当に無料ですか?</span><span class="ub-faqmark" style="color:#D85A30;font-size:24px;line-height:1;flex:none">+</span></summary>
+        <p style="margin:0;padding:0 0 20px;color:var(--fg2);font-size:15px;text-wrap:pretty">はい。フリーソフトとして公開しており、機能制限や課金はありません。</p>
+      </details>
+      <details style="border:2.5px solid var(--fg);border-radius:20px;background:var(--surface);padding:0 22px;margin:0 0 14px">
+        <summary style="display:flex;align-items:center;gap:14px;padding:18px 0;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:16.5px;color:var(--fg)"><span style="flex:1">予定データはどこに保存されますか?</span><span class="ub-faqmark" style="color:#D85A30;font-size:24px;line-height:1;flex:none">+</span></summary>
+        <p style="margin:0;padding:0 0 20px;color:var(--fg2);font-size:15px;text-wrap:pretty">すべてお使いの PC の中だけに保存されます。サーバはなく、外部に送信されることはありません。アカウント登録も不要です。</p>
+      </details>
+      <details style="border:2.5px solid var(--fg);border-radius:20px;background:var(--surface);padding:0 22px;margin:0 0 14px">
+        <summary style="display:flex;align-items:center;gap:14px;padding:18px 0;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:16.5px;color:var(--fg)"><span style="flex:1">会社の PC で使えますか?</span><span class="ub-faqmark" style="color:#D85A30;font-size:24px;line-height:1;flex:none">+</span></summary>
+        <p style="margin:0;padding:0 0 20px;color:var(--fg2);font-size:15px;text-wrap:pretty">外部通信を行わず、自動アップデートもありません。組織でお使いの際は、導入前に検証環境での動作確認をお願いします。実測で検証する手順も公開しています。</p>
+      </details>
+      <details style="border:2.5px solid var(--fg);border-radius:20px;background:var(--surface);padding:0 22px;margin:0 0 14px">
+        <summary style="display:flex;align-items:center;gap:14px;padding:18px 0;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:16.5px;color:var(--fg)"><span style="flex:1">自動でアップデートされますか?</span><span class="ub-faqmark" style="color:#D85A30;font-size:24px;line-height:1;flex:none">+</span></summary>
+        <p style="margin:0;padding:0 0 20px;color:var(--fg2);font-size:15px;text-wrap:pretty">いいえ。更新は、バージョンを指定したインストーラを手動で実行したときだけ。組織として許可するバージョンを固定できます。</p>
+      </details>
+      <details style="border:2.5px solid var(--fg);border-radius:20px;background:var(--surface);padding:0 22px;margin:0 0 14px">
+        <summary style="display:flex;align-items:center;gap:14px;padding:18px 0;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:16.5px;color:var(--fg)"><span style="flex:1">対応している OS は?</span><span class="ub-faqmark" style="color:#D85A30;font-size:24px;line-height:1;flex:none">+</span></summary>
+        <p style="margin:0;padding:0 0 20px;color:var(--fg2);font-size:15px;text-wrap:pretty">Windows 10 / 11(64bit)に対応しています。</p>
+      </details>
+      <details style="border:2.5px solid var(--fg);border-radius:20px;background:var(--surface);padding:0 22px;margin:0">
+        <summary style="display:flex;align-items:center;gap:14px;padding:18px 0;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:16.5px;color:var(--fg)"><span style="flex:1">起動時に警告が表示されます</span><span class="ub-faqmark" style="color:#D85A30;font-size:24px;line-height:1;flex:none">+</span></summary>
+        <p style="margin:0;padding:0 0 20px;color:var(--fg2);font-size:15px;text-wrap:pretty">コード署名を行っていないため、初回実行時に SmartScreen の確認が表示されることがあります。配布元は GitHub の公開リポジトリのみです。</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section id="gov" class="ub-pad" style="max-width:760px;margin:0 auto;padding:0 26px clamp(72px,13vh,160px)">
+  <div data-rv style="background:var(--surface);border:2.5px solid var(--fg);border-radius:28px;padding:clamp(30px,5vw,48px);box-shadow:8px 8px 0 0 var(--fg)">
+    <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.08em;color:#fff;background:#D85A30;padding:6px 16px;border-radius:999px">導入にあたって</span>
+    <h2 style="margin:16px 0 18px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(22px,3.4vw,32px);line-height:1.36;color:var(--fg);text-wrap:balance">セキュリティを最優先に。それでも、導入前の検証を。</h2>
+    <p style="margin:0 0 16px;font-size:15px;color:var(--fg2);line-height:1.95;text-wrap:pretty">usagii は、セキュリティ要件の厳しい企業環境でも使えることを目指して設計しています。外部との通信は一切行わず、予定データやテレメトリが PC の外へ送信されることはありません。これは宣言だけではなく、<a href="./verify.html" class="ub-link">ご自身の環境で実測検証する手順</a>を公開しています。</p>
+    <p style="margin:0;font-size:15px;color:var(--fg2);line-height:1.95;text-wrap:pretty">自動アップデート機構は意図的に搭載していません。更新は<b style="color:var(--fg);font-weight:900">バージョンを指定したインストーラを手動で実行したときだけ</b>。各バージョンのインストーラは <a href="https://github.com/koutakagatsume/usagii/releases" class="ub-link">Releases ページ</a>にすべて残ります。業務でお使いの際は、導入前に検証環境での評価を必ず実施してください。</p>
+  </div>
+</section>
+
+<section id="download" style="background:#D85A30;color:#fff">
+  <div class="ub-pad" data-rv style="max-width:760px;margin:0 auto;padding:clamp(80px,15vh,190px) 26px;text-align:center">
+    <h2 style="margin:0 0 28px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(32px,5.4vw,58px);color:#fff">さあ、はじめよう。</h2>
+    <a href="https://github.com/koutakagatsume/usagii/releases/latest/download/usagii-setup.exe" style="display:inline-block;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:19px;color:#D85A30;background:#fff;padding:19px 46px;border-radius:999px;box-shadow:0 12px 0 0 rgba(0,0,0,.16);letter-spacing:.02em" data-uh4>Windows 版をダウンロード</a>
+    <p style="margin:18px 0 0;font-size:13.5px;color:#FFE3D6">無料 ・ 約 5MB ・ 動作要件 Windows 10 / 11(64bit)</p>
+    <p style="margin:28px auto 0;max-width:34em;font-size:13.5px;color:#FFD7C4;text-wrap:pretty">更新するときも、新しいインストーラを実行するだけ。予定データはそのまま引き継がれます。変更点は<a href="./changelog.html" style="color:#fff;font-weight:700;border-bottom:1px solid rgba(255,255,255,.5)">更新履歴</a>からどうぞ。</p>
+  </div>
+</section>
+
+<footer style="background:#2A211B;color:#b4a99f">
+  <div class="ub-pad" style="max-width:1140px;margin:0 auto;padding:44px 26px 56px;display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-size:12.5px">
+    <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;color:#E8693F;font-size:16px">usagii</span>
+    <span>© 2026 usagii project</span>
+    <a href="https://github.com/koutakagatsume/usagii" style="color:#d3cabf" data-uh5>GitHub</a>
+    <a href="./changelog.html" style="color:#d3cabf" data-uh6>更新履歴</a>
+    <a href="./privacy.html" style="color:#d3cabf" data-uh7>プライバシー・免責事項</a>
+    <a href="./verify.html" style="color:#d3cabf" data-uh8>通信の検証方法</a>
+    <a href="./usagi.html" style="color:#d3cabf" data-uh9>名前の由来</a>
+  </div>
 </footer>
 
+</div>
+<script src="./usagii-appmock.js"></script>
+<script src="./usagii-demo.js"></script>
 <script>
-// スクロール出現
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.2});
-document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-
-// シーン切替(スクロールに応じてアプリの状態を変える / PC のみ表示される stage 用)
-const stage=document.getElementById('stage');
-const so=new IntersectionObserver(es=>{
-  es.forEach(e=>{if(e.isIntersecting)stage.dataset.scene=e.target.dataset.scene;});
-},{threshold:.55});
-document.querySelectorAll('.step').forEach(el=>so.observe(el));
-
-// スマホ用: ステージ内に各シーンのテキストを複製し、スクロールに応じて
-// クロスフェードで切り替える (モックは固定のままシーンだけが変わる)
-const texts=document.createElement('div');
-texts.className='scene-texts';
-document.querySelectorAll('.step').forEach(st=>{
-  const t=document.createElement('div');
-  t.className='scene-text';
-  t.dataset.for=st.dataset.scene;
-  t.innerHTML=st.innerHTML;
-  texts.appendChild(t);
-});
-stage.appendChild(texts);
-
-// 最新バージョン表示(失敗しても無視)
-fetch('https://api.github.com/repos/koutakagatsume/usagii/releases/latest')
-  .then(r=>r.ok?r.json():null)
-  .then(j=>{if(j&&j.tag_name)document.getElementById('ver').textContent=`無料 ・ 約 5MB ・ Windows 10 / 11(64bit) ・ 最新版 ${j.tag_name}`;})
-  .catch(()=>{});
-
-// ---------- インタラクティブデモ (ブラウザ内のみ・保存なし) ----------
-(()=>{
-const dm=document.getElementById('dm');
-if(!dm)return;
-const $=id=>document.getElementById(id);
-const WD=['日','月','火','水','木','金','土'];
-const CATS={w:'仕事',p:'私用',i:'重要',h:'家'};
-// デモ内の「今日」は 2026-06-10 で固定 (上の静的モックと同じ日付。
-// 実日付が進んでも「あと N 日」が超過表示にならない)
-const t0=new Date(2026,5,10);
-const pad=n=>String(n).padStart(2,'0');
-const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
-const off=n=>{const d=new Date(t0);d.setDate(d.getDate()+n);return d;};
-const parse=k=>{const[a,b,c]=k.split('-').map(Number);return new Date(a,b-1,c);};
-const fmt=d=>(d.getMonth()+1)+'/'+d.getDate()+' ('+WD[d.getDay()]+')';
-const PIN='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4v6l-2 4v2h10v-2l-2-4V4"/><line x1="12" y1="16" x2="12" y2="21"/><line x1="8" y1="4" x2="16" y2="4"/></svg>';
-let seq=0;
-const mk=(title,o,time,cats,pinned)=>({id:++seq,title:title,date:iso(off(o)),time:time,cats:cats||[],pinned:!!pinned,done:false});
-// 上の静的モックと同じ内容のサンプルデータ
-const items=[
-  mk('粗大ゴミ申込',0,null,['h']),
-  mk('チーム定例',0,'13:00-14:00',['w']),
-  mk('設計レビュー',1,'10:00-12:00',['w','i']),
-  mk('TNKN MTG',1,'15:00-16:00',['i'],true),
-  mk('夜間メンテ立会い',2,'23:00-01:00',['w','i']),
-  mk('父の日の買い物',4,null,['p']),
-  mk('車検',13,null,[],true),
-  mk('Aプロジェクト納品',65,null,['w'],true),
-];
-let tab='active',newId=0,sel=new Set(),qcats=new Set(),pinsCol=false,sectCol=false;
-let vw='day',va=new Date(t0); // 表示モード (日|週|月) と週・月の基準日
-let dragItem=null; // DnD でドラッグ中の予定
-const list=$('dmList'),pinsEl=$('dmPins'),toastEl=$('dmToast'),quick=$('dmQuick'),
-      ti=$('dmTitle'),di=$('dmDate'),addBtn=$('dmAdd'),qi=$('dmQuery');
-di.value=iso(t0);
-// 日付が今日以外のとき「今日」ボタンを出す
-const qToday=$('dmQToday');
-const syncQToday=()=>{qToday.style.display=di.value!==iso(t0)?'':'none';};
-di.addEventListener('change',syncQToday);
-qToday.addEventListener('click',()=>{di.value=iso(t0);syncQToday();});
-let toastT;
-const toast=m=>{toastEl.textContent=m;toastEl.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>toastEl.classList.remove('show'),1600);};
-const daysTo=k=>Math.round((parse(k)-t0)/864e5);
-const flash=el=>{el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1300);};
-const filtering=()=>qi.value.trim()!==''||sel.size>0;
-
-function syncTabs(){
-  dm.querySelectorAll('.dm-seg button').forEach(b=>{
-    const on=b.dataset.tab===tab;
-    b.classList.toggle('on',on);
-    b.setAttribute('aria-pressed',on?'true':'false');
-  });
-}
-
-// 検索セクションの開閉 (アプリと同様、畳み中は絞り込み状態を表示)
-function applySect(){
-  $('dmSectBody').style.display=sectCol?'none':'';
-  $('dmSectTgl').textContent=sectCol?'∨':'∧';
-  $('dmSectTgl').setAttribute('aria-expanded',sectCol?'false':'true');
-  const f=sectCol&&filtering();
-  $('dmSectLbl').textContent=f?'検索(絞り込み中)':'検索';
-  $('dmSectLbl').style.color=f?'var(--itx)':'';
-}
-
-// カテゴリチップ (未絞り込み時は全チップに色、絞り込み中は選択分だけ)
-function renderChips(){
-  const box=$('dmChips');
-  box.innerHTML='';
-  const all=document.createElement('button');
-  all.className='dm-chip'+(sel.size===0?' on':'');
-  all.textContent='すべて';
-  all.setAttribute('aria-pressed',sel.size===0?'true':'false');
-  all.addEventListener('click',()=>{sel.clear();renderAll();});
-  box.appendChild(all);
-  for(const k of Object.keys(CATS)){
-    const b=document.createElement('button');
-    b.className='dm-chip c-'+k+((sel.size===0||sel.has(k))?' col':'');
-    b.textContent=CATS[k];
-    b.setAttribute('aria-pressed',sel.has(k)?'true':'false');
-    b.addEventListener('click',()=>{if(sel.has(k)){sel.delete(k);}else{sel.add(k);}renderAll();});
-    box.appendChild(b);
-  }
-}
-
-// クイック登録のカテゴリ選択チップ
-function renderQCats(){
-  const box=$('dmQCats');
-  box.innerHTML='';
-  for(const k of Object.keys(CATS)){
-    const b=document.createElement('button');
-    b.className='dm-chip c-'+k+(qcats.has(k)?' col':'');
-    b.textContent=CATS[k];
-    b.setAttribute('aria-pressed',qcats.has(k)?'true':'false');
-    b.addEventListener('click',()=>{if(qcats.has(k)){qcats.delete(k);}else{qcats.add(k);}renderQCats();});
-    box.appendChild(b);
-  }
-}
-
-function render(){
-  // ピンエリア (未完了のピンのみ・開始日昇順・検索の影響を受けない)
-  const pn=items.filter(i=>i.pinned&&!i.done).sort((a,b)=>a.date<b.date?-1:1);
-  pinsEl.innerHTML='';
-  if(pn.length){
-    const h=document.createElement('div');h.className='dm-ph';
-    const tg=document.createElement('button');tg.className='tgl';
-    tg.textContent=pinsCol?'∨':'∧';
-    tg.setAttribute('aria-label','ピン留め表示の折りたたみ');
-    tg.setAttribute('aria-expanded',pinsCol?'false':'true');
-    tg.addEventListener('click',()=>{pinsCol=!pinsCol;render();});
-    h.appendChild(tg);
-    h.appendChild(document.createTextNode(pinsCol?'ピン留め ('+pn.length+'件)':'ピン留め'));
-    pinsEl.appendChild(h);
-    if(!pinsCol)for(const i of pn){
-      const n=daysTo(i.date);
-      const r=document.createElement('div');r.className='dm-pinrow';
-      // キーボードでもジャンプできるようにする
-      r.setAttribute('role','button');
-      r.tabIndex=0;
-      r.setAttribute('aria-label',i.title+'('+fmt(parse(i.date))+')へ移動');
-      r.innerHTML='<span class="dm-pic">'+PIN+'</span><span class="dm-pd"></span><span class="dm-pt"></span>'
-        +'<span class="dm-cnt '+(n<0?'over':n===0?'tdy':'')+'">'+(n>0?'あと'+n+'日':n===0?'今日':(-n)+'日超過')+'</span>'
-        +'<button class="dm-unpin" title="ピン解除" aria-label="ピン解除">✕</button>';
-      r.querySelector('.dm-pd').textContent=fmt(parse(i.date));
-      r.querySelector('.dm-pt').textContent=i.title;
-      const jump=()=>{
-        if(tab!=='active'){tab='active';syncTabs();render();}
-        const el=list.querySelector('[data-id="'+i.id+'"]');
-        if(el){el.scrollIntoView({block:'nearest',behavior:'smooth'});flash(el);}
-        else{toast('検索・フィルタ中のため一覧に非表示です');}
-      };
-      r.addEventListener('click',jump);
-      r.addEventListener('keydown',e=>{
-        if(e.key==='Enter'||e.key===' '){e.preventDefault();jump();}
-      });
-      r.querySelector('.dm-unpin').addEventListener('click',e=>{
-        e.stopPropagation();i.pinned=false;toast('ピン留めを外しました');render();
-      });
-      pinsEl.appendChild(r);
+class DCLogic{setState(){}forceUpdate(){}}
+class Component extends DCLogic {
+  componentDidMount() {
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    const rvs = document.querySelectorAll('[data-rv]');
+    if (reduce || !('IntersectionObserver' in window)) {
+      rvs.forEach(el => el.classList.add('in'));
+    } else {
+      const io = new IntersectionObserver((es) => {
+        es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.18 });
+      rvs.forEach(el => io.observe(el));
     }
-  }
-  // 表示モードに応じてリスト領域を描画
-  if(vw==='day'){renderDay();}
-  else if(vw==='week'){renderWeek();}
-  else{renderMonth();}
-}
-
-// タブ + 検索 + カテゴリの絞り込みを適用した一覧 (全ビュー共通)
-function visibleItems(){
-  const q=qi.value.trim();
-  return items.filter(i=>(tab==='done'?i.done:!i.done)
-    &&(q===''||i.title.includes(q))
-    &&(sel.size===0||i.cats.some(c=>sel.has(c))));
-}
-
-const byTime=(a,b)=>{
-  if((a.time===null)!==(b.time===null))return a.time===null?-1:1;
-  if(a.time!==b.time)return a.time<b.time?-1:1;
-  return a.id-b.id;
-};
-
-function renderDay(){
-  const vis=visibleItems();
-  const map=new Map();
-  for(const i of vis){if(!map.has(i.date))map.set(i.date,[]);map.get(i.date).push(i);}
-  const tk=iso(t0);
-  if(!map.has(tk))map.set(tk,[]);
-  list.innerHTML='';
-  for(const k of [...map.keys()].sort()){
-    const d=parse(k);
-    // 日付ごとのセクションで包む (sticky ヘッダの押し出しと、
-    // stuck 中でも offsetTop が正しく取れるようにするため)
-    const day=document.createElement('div');
-    day.className='dm-day';
-    day.dataset.k=k;
-    // DnD: 別日付のセクションへドロップで移動
-    day.addEventListener('dragover',e=>{
-      if(dragItem&&dragItem.date!==k){e.preventDefault();day.classList.add('drop-on');}
-    });
-    day.addEventListener('dragleave',()=>day.classList.remove('drop-on'));
-    day.addEventListener('drop',e=>{
-      e.preventDefault();day.classList.remove('drop-on');
-      if(dragItem&&dragItem.date!==k){
-        const m=dragItem;m.date=k;dragItem=null;newId=m.id;render();
-        toast(fmt(parse(k))+' に移動しました');
-      }
-    });
-    const dh=document.createElement('div');
-    dh.className='dm-dh'+(k===tk?' now':d.getDay()===0?' sun':d.getDay()===6?' sat':'');
-    const sp=document.createElement('span');sp.textContent=fmt(d);dh.appendChild(sp);
-    if(k===tk){const b=document.createElement('span');b.className='dm-today';b.textContent='今日';dh.appendChild(b);}
-    day.appendChild(dh);
-    const arr=map.get(k).sort(byTime);
-    if(!arr.length){
-      const e=document.createElement('div');e.className='dm-emp';
-      e.textContent=tab==='done'?'完了した予定はありません':'予定はありません';
-      day.appendChild(e);
+    const setScene = (s) => {
+      const m = document.querySelector('#features usagii-appmock');
+      if (m) m.setAttribute('scene', s);
+    };
+    const steps = document.querySelectorAll('.ub-step');
+    if (steps.length && 'IntersectionObserver' in window) {
+      const so = new IntersectionObserver((es) => {
+        es.forEach(e => { if (e.isIntersecting && e.target.dataset.scene) setScene(e.target.dataset.scene); });
+      }, { threshold: 0.55 });
+      steps.forEach(el => so.observe(el));
     }
-    for(const i of arr){
-      const r=document.createElement('div');
-      r.className='dm-row'+(i.done?' ck':'')+(i.id===newId?' new':'');
-      r.dataset.id=i.id;
-      r.draggable=true;
-      r.addEventListener('dragstart',e=>{
-        dragItem=i;r.classList.add('dragging');e.dataTransfer.effectAllowed='move';
-      });
-      r.addEventListener('dragend',()=>{
-        dragItem=null;r.classList.remove('dragging');
-        list.querySelectorAll('.dm-day.drop-on').forEach(d=>d.classList.remove('drop-on'));
-      });
-      const cb=document.createElement('input');
-      cb.type='checkbox';cb.checked=i.done;
-      cb.setAttribute('aria-label',i.title+' を完了にする');
-      const main=document.createElement('div');main.className='dm-main';
-      const tm=document.createElement('span');tm.className='dm-tm';tm.textContent=i.time||'終日';
-      const tt=document.createElement('span');tt.className='dm-tt';tt.textContent=i.title;
-      main.appendChild(tm);main.appendChild(tt);
-      for(const c of i.cats){
-        const bg=document.createElement('button');
-        bg.className='dm-bdg c-'+c;bg.textContent=CATS[c];
-        bg.addEventListener('click',()=>{sel=new Set([c]);renderAll();});
-        main.appendChild(bg);
-      }
-      const pb=document.createElement('button');
-      pb.className='dm-pinb'+(i.pinned?' on':'');
-      pb.title='ピン留め';
-      pb.setAttribute('aria-label',i.title+' をピン留め');
-      pb.setAttribute('aria-pressed',i.pinned?'true':'false');
-      pb.innerHTML=PIN;
-      cb.addEventListener('change',()=>{
-        i.done=cb.checked;
-        // 完了へ = 右、予定へ戻す = 左へスライドして退場 (タブの並びと同じ向き)
-        r.classList.add('ck',i.done?'outr':'outl');
-        if(i.done){const up=i.pinned;i.pinned=false;toast(up?'完了へ移動し、ピン留めを外しました':'完了へ移動しました');}
-        else{toast('予定へ戻しました');}
-        setTimeout(render,260);
-      });
-      pb.addEventListener('click',()=>{
-        i.pinned=!i.pinned;toast(i.pinned?'ピン留めしました':'ピン留めを外しました');render();
-      });
-      r.appendChild(cb);r.appendChild(main);
-      if(!i.done)r.appendChild(pb); // 完了行はピン操作の対象外
-      day.appendChild(r);
-    }
-    list.appendChild(day);
+    this._initTheme();
   }
-  newId=0;
+
+  _initTheme() {
+    const root = document.documentElement;
+    const KEY = 'usagii-lp-theme';
+    const mq = window.matchMedia('(prefers-color-scheme:dark)');
+    const resolve = () => { const p = localStorage.getItem(KEY); return (p === 'dark' || p === 'light') ? p : (mq.matches ? 'dark' : 'light'); };
+    const sun = document.getElementById('ubSun'), moon = document.getElementById('ubMoon');
+    const syncDemos = () => { const p = localStorage.getItem(KEY); const dt = (p === 'dark' || p === 'light') ? p : 'auto'; document.querySelectorAll('usagii-demo').forEach(d => d.setAttribute('theme', dt)); };
+    const apply = () => {
+      const p = localStorage.getItem(KEY);
+      if (p === 'dark' || p === 'light') root.setAttribute('data-theme', p); else root.removeAttribute('data-theme');
+      const eff = resolve();
+      syncDemos();
+      if (sun && moon) { sun.style.display = eff === 'dark' ? '' : 'none'; moon.style.display = eff === 'dark' ? 'none' : ''; }
+    };
+    apply();
+    // the touch demo mounts asynchronously (x-import); keep syncing its theme until it appears
+    let _t = 0; const _iv = setInterval(() => { syncDemos(); if (document.querySelector('usagii-demo') || ++_t > 25) clearInterval(_iv); }, 150);
+    const btn = document.getElementById('ubTheme');
+    if (btn) btn.addEventListener('click', () => { localStorage.setItem(KEY, resolve() === 'dark' ? 'light' : 'dark'); apply(); });
+    if (mq.addEventListener) mq.addEventListener('change', () => { if (!localStorage.getItem(KEY)) apply(); });
+  }
+
+  renderVals() { return {}; }
 }
-
-// 週ビュー: 日曜はじまり 7 列。日付・チップのクリックでその日の日表示へ
-function renderWeek(){
-  const vis=visibleItems();
-  const start=new Date(va);start.setDate(start.getDate()-start.getDay());
-  const endD=new Date(start);endD.setDate(endD.getDate()+6);
-  list.innerHTML='';
-  const vh=document.createElement('div');vh.className='dm-vhead';
-  vh.textContent=fmt(start)+' 〜 '+fmt(endD);
-  list.appendChild(vh);
-  const g=document.createElement('div');g.className='dm-wkg';
-  for(let n=0;n<7;n++){
-    const d=new Date(start);d.setDate(d.getDate()+n);
-    const k=iso(d);
-    const col=document.createElement('div');col.className='dm-wkc';
-    const h=document.createElement('button');
-    h.className='dm-wkh'+(k===iso(t0)?' now':d.getDay()===0?' sun':d.getDay()===6?' sat':'');
-    h.title='この日の日表示へ';
-    const dn=document.createElement('span');dn.className='d';dn.textContent=d.getDate();
-    const wn=document.createElement('span');wn.className='w';wn.textContent=WD[d.getDay()];
-    h.appendChild(dn);h.appendChild(wn);
-    h.addEventListener('click',()=>gotoDay(k));
-    col.appendChild(h);
-    vis.filter(x=>x.date===k).sort(byTime).forEach(x=>{
-      const c=document.createElement('button');
-      c.className='dm-wkchip'+(x.cats[0]?' c-'+x.cats[0]:'')+(x.done?' ck':'');
-      c.textContent=x.title;c.title=x.title;
-      c.addEventListener('click',()=>gotoDay(k));
-      col.appendChild(c);
-    });
-    g.appendChild(col);
-  }
-  list.appendChild(g);
-}
-
-// 月ビュー: 7×6 グリッド。セルクリックでその日の日表示へ
-function renderMonth(){
-  const vis=visibleItems();
-  const first=new Date(va.getFullYear(),va.getMonth(),1);
-  const start=new Date(first);start.setDate(start.getDate()-start.getDay());
-  list.innerHTML='';
-  const vh=document.createElement('div');vh.className='dm-vhead';
-  vh.textContent=va.getFullYear()+'年'+(va.getMonth()+1)+'月';
-  list.appendChild(vh);
-  const wd=document.createElement('div');wd.className='dm-mowd';
-  WD.forEach((w,n)=>{
-    const s=document.createElement('span');s.textContent=w;
-    if(n===0)s.className='sun';if(n===6)s.className='sat';
-    wd.appendChild(s);
-  });
-  list.appendChild(wd);
-  const g=document.createElement('div');g.className='dm-mog';
-  for(let n=0;n<42;n++){
-    const d=new Date(start);d.setDate(d.getDate()+n);
-    const k=iso(d);
-    const cell=document.createElement('button');
-    cell.className='dm-moc'+(d.getMonth()!==va.getMonth()?' out':'')+(k===iso(t0)?' today':'');
-    cell.title='この日の日表示へ';
-    const num=document.createElement('span');
-    num.className='dm-mon'+(k===iso(t0)?' now':d.getDay()===0?' sun':d.getDay()===6?' sat':'');
-    num.textContent=d.getDate();
-    cell.appendChild(num);
-    const evs=vis.filter(x=>x.date===k).sort(byTime);
-    evs.slice(0,2).forEach(x=>{
-      const c=document.createElement('span');
-      c.className='dm-mochip'+(x.cats[0]?' c-'+x.cats[0]:'')+(x.done?' ck':'');
-      c.textContent=x.title;
-      cell.appendChild(c);
-    });
-    if(evs.length>2){
-      const m=document.createElement('span');m.className='dm-momore';
-      m.textContent='+'+(evs.length-2);
-      cell.appendChild(m);
-    }
-    cell.addEventListener('click',()=>gotoDay(k));
-    g.appendChild(cell);
-  }
-  list.appendChild(g);
-}
-
-function syncVw(){
-  dm.querySelectorAll('.dm-vseg button').forEach(b=>{
-    const on=b.dataset.vw===vw;
-    b.classList.toggle('on',on);
-    b.setAttribute('aria-pressed',on?'true':'false');
-  });
-}
-
-// 週・月から日表示へ移動し、該当日があればふわっとハイライト
-function gotoDay(k){
-  vw='day';syncVw();render();
-  const el=list.querySelector('[data-k="'+k+'"]');
-  if(el){
-    list.scrollTo({top:el.offsetTop,behavior:'smooth'});
-    const dh=el.querySelector('.dm-dh');
-    if(dh&&!dh.classList.contains('now')){
-      dh.classList.add('jflash');
-      setTimeout(()=>dh.classList.remove('jflash'),1300);
-    }
-  }
-}
-
-function renderAll(){renderChips();applySect();render();}
-
-dm.querySelectorAll('.dm-seg button').forEach(b=>b.addEventListener('click',()=>{tab=b.dataset.tab;syncTabs();render();}));
-$('dmSectTgl').addEventListener('click',()=>{sectCol=!sectCol;applySect();});
-qi.addEventListener('input',()=>render());
-// 日|週|月 の切替 (週・月へ移ったら今日を含む期間から)
-dm.querySelectorAll('.dm-vseg button').forEach(b=>b.addEventListener('click',()=>{
-  vw=b.dataset.vw;
-  if(vw!=='day')va=new Date(t0);
-  syncVw();render();
-}));
-// ‹ 今日 ›: 日 = 前後の予定日へ / 週 = ±1週 / 月 = ±1月
-$('dmToday').addEventListener('click',()=>{
-  if(vw==='day'){
-    const el=list.querySelector('[data-k="'+iso(t0)+'"]');
-    if(el)list.scrollTo({top:el.offsetTop,behavior:'smooth'});
-  }else{
-    va=new Date(t0);render();
-  }
-});
-const step=dir=>{
-  if(vw==='week'){va.setDate(va.getDate()+dir*7);render();return;}
-  if(vw==='month'){va=new Date(va.getFullYear(),va.getMonth()+dir,1);render();return;}
-  const hs=[...list.querySelectorAll('[data-k]')];
-  let cur=-1;
-  for(let i=0;i<hs.length;i++){if(hs[i].offsetTop<=list.scrollTop+1){cur=i;}else{break;}}
-  const nx=cur+dir;
-  if(nx<0||nx>=hs.length){toast(dir>0?'これより後に予定のある日はありません':'これより前に予定のある日はありません');return;}
-  list.scrollTo({top:hs[nx].offsetTop,behavior:'smooth'});
-};
-$('dmPrev').addEventListener('click',()=>step(-1));
-$('dmNext').addEventListener('click',()=>step(1));
-// クイック登録: フォーカス中だけ日付 + カテゴリ行を展開 (アプリと同じ挙動)
-quick.addEventListener('focusin',()=>quick.classList.add('open'));
-// Safari はボタンクリックでフォーカスが移らず relatedTarget が null になるため、
-// activeElement を次フレームで判定する
-quick.addEventListener('focusout',()=>{
-  setTimeout(()=>{
-    if(!quick.contains(document.activeElement)&&ti.value.trim()===''&&qcats.size===0){
-      quick.classList.remove('open');
-    }
-  },0);
-});
-// チップ押下でタイトル入力からフォーカスを奪わない (行が閉じてクリックを取りこぼすのを防ぐ)
-$('dmQCats').addEventListener('mousedown',e=>e.preventDefault());
-ti.addEventListener('input',()=>{addBtn.disabled=ti.value.trim()==='';});
-const add=()=>{
-  const t=ti.value.trim();
-  if(!t)return;
-  const i={id:++seq,title:t,date:di.value||iso(t0),time:null,cats:[...qcats],pinned:false,done:false};
-  items.push(i);
-  ti.value='';addBtn.disabled=true;qcats.clear();renderQCats();
-  if(tab!=='active'){tab='active';syncTabs();}
-  if(vw!=='day'){vw='day';syncVw();} // 登録した行が見える日表示へ
-  newId=i.id;
-  render();
-  const el=list.querySelector('[data-id="'+i.id+'"]');
-  if(el){
-    el.scrollIntoView({block:'nearest',behavior:'smooth'});
-    toast('保存しました');
-  }else{
-    // 検索・カテゴリ絞り込みに合致しない場合は一覧に出ないことを案内
-    toast('保存しました(絞り込み中のため一覧には非表示)');
-  }
-};
-addBtn.addEventListener('click',add);
-// IME 確定の Enter では登録しない (Safari は isComposing=false で来るため keyCode 229 も併用)
-ti.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing&&e.keyCode!==229)add();});
-renderQCats();
-renderAll();
-})();
+document.addEventListener("DOMContentLoaded",function(){try{var c=new Component();if(c.componentDidMount)c.componentDidMount();}catch(e){console.error(e);}});
 </script>
 </body>
 </html>

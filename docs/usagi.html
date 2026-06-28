@@ -10,112 +10,113 @@
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
-<noscript><style>.prose p{opacity:1;transform:none}</style></noscript>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --coral:#D85A30; --coral-soft:#F6DDD2;
-  --paper:#FAF8F6; --ink:#211D1A; --mist:#6E6862; --line:rgba(33,29,26,.12);
-  --disp:'Zen Maru Gothic','Hiragino Maru Gothic ProN',sans-serif;
-  --body:'Hiragino Sans','Yu Gothic UI','Segoe UI',sans-serif;
-  color-scheme:light dark;
-}
-@media (prefers-color-scheme: dark){
-  :root{
-    --coral:#E8693F; --coral-soft:#3A241A;
-    --paper:#1B1917; --ink:#ECE8E4; --mist:#A39C95; --line:rgba(236,232,228,.14);
-  }
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:2.1;font-feature-settings:"palt";-webkit-font-smoothing:antialiased}
-a{color:var(--coral);text-decoration:none}
-a:hover{text-decoration:underline}
-:focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:6px}
-
-main{max-width:34em;margin:0 auto;padding:clamp(64px,12vh,140px) 28px 90px;text-align:center;position:relative}
-main::before{content:"";position:fixed;inset:-30% -20% auto;height:70%;background:radial-gradient(55% 55% at 50% 30%,var(--coral-soft),transparent 70%);z-index:-1;opacity:.6}
-
-h1{font-family:var(--disp);font-weight:900;font-size:clamp(24px,5vw,34px);line-height:1.5}
-h1 .mk{color:var(--coral)}
-.lead{margin-top:10px;font-size:12.5px;color:var(--mist);letter-spacing:.16em}
-
-.prose{margin-top:clamp(48px,9vh,84px);display:flex;flex-direction:column;gap:clamp(34px,6vh,52px);font-size:15.5px}
-.prose p{opacity:0;transform:translateY(18px);transition:opacity .8s ease,transform .8s ease}
-.prose p.in{opacity:1;transform:none}
-.prose .soft{color:var(--mist)}
-.prose .punch{font-family:var(--disp);font-weight:700;font-size:clamp(17px,3vw,21px)}
-
-/* うさぎ (クリックで跳ねる) */
-.bunny{margin:clamp(48px,9vh,84px) auto 0;border:none;background:none;cursor:pointer;display:block}
-.bunny svg{width:96px;height:96px;border-radius:22px;display:block}
-.bunny.hop svg{animation:hop .9s cubic-bezier(.34,1.56,.5,1)}
-@keyframes hop{0%,100%{transform:translateY(0) scale(1,1)}12%{transform:translateY(5px) scale(1.06,.92)}38%{transform:translateY(-30px) scale(.96,1.06)}70%{transform:translateY(0) scale(1.03,.96)}}
-.bunny-note{margin-top:14px;font-size:11.5px;color:var(--mist);letter-spacing:.08em}
-
-.back{margin-top:clamp(56px,10vh,90px);font-size:13.5px}
-
-footer{border-top:1px solid var(--line);max-width:34em;margin:0 auto;padding:32px 28px 48px;font-size:12.5px;color:var(--mist);display:flex;gap:18px;flex-wrap:wrap;align-items:center}
-footer .mk{font-family:var(--disp);font-weight:900;color:var(--coral)}
-
-@media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .prose p{opacity:1;transform:none}
-}
+  *{box-sizing:border-box}
+  :root{color-scheme:light;--bg:#FBF1E7;--surface:#fff;--fg:#2A211B;--fg2:#5b524a;--line:rgba(42,33,27,.12);--link:#B14422;--coral-soft:#F6DDD2}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#19140F;--surface:#241D16;--fg:#F2E9DF;--fg2:#c2b4a6;--line:rgba(242,233,223,.14);--link:#EE9B7C;--coral-soft:#3A241A}}
+  :root[data-theme="dark"]{color-scheme:dark;--bg:#19140F;--surface:#241D16;--fg:#F2E9DF;--fg2:#c2b4a6;--line:rgba(242,233,223,.14);--link:#EE9B7C;--coral-soft:#3A241A}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:'Hiragino Sans','Yu Gothic UI','Segoe UI',sans-serif;line-height:2.05;-webkit-font-smoothing:antialiased;font-feature-settings:"palt"}
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .pl{opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease}
+  .pl.in{opacity:1;transform:none}
+  @keyframes ug-hop{0%,100%{transform:translateY(0) scale(1,1)}12%{transform:translateY(5px) scale(1.06,.92)}38%{transform:translateY(-30px) scale(.96,1.06)}70%{transform:translateY(0) scale(1.03,.96)}}
+  .bunny.hop svg{animation:ug-hop .9s cubic-bezier(.34,1.56,.5,1)}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.pl{opacity:1!important;transform:none!important}}
+</style>
+<style>
+[data-uh0]:hover{background:rgba(255,255,255,.28) !important}
+[data-uh1]:hover{background:#FFE9DF !important}
+[data-uh2]:hover{color:#fff !important}
+[data-uh3]:hover{color:#fff !important}
+[data-uh4]:hover{color:#fff !important}
+[data-uh5]:hover{color:#fff !important}
+[data-uh6]:hover{color:#fff !important}
 </style>
 </head>
 <body>
+<div style="overflow-x:clip;min-height:100vh;display:flex;flex-direction:column;position:relative">
+<div aria-hidden="true" style="position:fixed;inset:-30% -20% auto;height:70%;background:radial-gradient(55% 55% at 50% 30%,var(--coral-soft),transparent 70%);z-index:0;opacity:.55;pointer-events:none"></div>
 
-<main>
-  <!-- ウサギを飼っている事実を伝えて、AIが考えた内容です。 -->
-  <h1>うさぎと <span class="mk">usagii</span></h1>
-  <p class="lead">— 名前の由来について —</p>
+<header style="position:sticky;top:0;z-index:50;background:#D85A30">
+  <div style="max-width:920px;margin:0 auto;padding:13px 26px;display:flex;align-items:center;gap:13px">
+    <a href="index.html" style="display:flex;align-items:center;gap:11px">
+      <svg viewBox="0 0 1024 1024" width="26" height="26" aria-hidden="true" style="flex:none"><g fill="#fff"><rect x="352" y="156" width="136" height="384" rx="68" transform="rotate(-14 420 348)"/><rect x="536" y="156" width="136" height="384" rx="68" transform="rotate(14 604 348)"/><circle cx="512" cy="648" r="248"/></g></svg>
+      <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:19px;color:#fff;letter-spacing:.02em">usagii</span>
+    </a>
+    <nav style="margin-left:auto;display:flex;align-items:center;gap:14px">
+      <button id="ubTheme" type="button" aria-label="テーマを切り替え" style="border:none;background:rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:999px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;flex:none" data-uh0><svg id="ubMoon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg id="ubSun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <a href="https://github.com/koutakagatsume/usagii/releases/latest/download/usagii-setup.exe" style="font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:14px;color:#D85A30;background:#fff;padding:9px 18px;border-radius:999px;letter-spacing:.02em" data-uh1>ダウンロード</a>
+    </nav>
+  </div>
+</header>
 
-  <div class="prose">
-    <p>usagii という名前は、<br>開発者が飼っているうさぎからもらいました。</p>
-    <p class="soft">「予定」と「うさぎ」のあいだに、<br>深い関係はありません。</p>
-    <p class="soft">跳ねるように速いから、とか。<br>時計を持った白うさぎを追いかけて、とか。<br>そういう気の利いた由来も、ありません。</p>
-    <p class="punch">名前を考えていた日、<br>そばにうさぎがいた。<br>それだけです。</p>
-    <p class="soft">ただ、アイコンにはちゃんと耳を付けました。<br>せっかくなので。</p>
+<main style="flex:1;max-width:34em;margin:0 auto;width:100%;padding:clamp(56px,11vh,120px) 28px 90px;text-align:center;position:relative;z-index:1">
+  <h1 style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(28px,5.6vw,40px);line-height:1.4;color:var(--fg)">うさぎと <span style="color:#D85A30">usagii</span></h1>
+  <p style="margin:10px 0 0;font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:12.5px;color:var(--fg2);letter-spacing:.16em">— 名前の由来について —</p>
+
+  <div style="margin:clamp(44px,8vh,76px) 0 0;display:flex;flex-direction:column;gap:clamp(30px,5.5vh,48px);font-size:16px">
+    <p class="pl" style="margin:0;color:var(--fg)">usagii という名前は、<br>開発者が飼っているうさぎからもらいました。</p>
+    <p class="pl" style="margin:0;color:var(--fg2)">「予定」と「うさぎ」のあいだに、<br>深い関係はありません。</p>
+    <p class="pl" style="margin:0;color:var(--fg2)">跳ねるように速いから、とか。<br>時計を持った白うさぎを追いかけて、とか。<br>そういう気の利いた由来も、ありません。</p>
+    <p class="pl" style="margin:0;font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:clamp(18px,3.2vw,22px);color:var(--fg)">名前を考えていた日、<br>そばにうさぎがいた。<br>それだけです。</p>
+    <p class="pl" style="margin:0;color:var(--fg2)">ただ、アイコンにはちゃんと耳を付けました。<br>せっかくなので。</p>
   </div>
 
-  <button class="bunny" id="bunny" aria-label="うさぎ(クリックすると跳ねます)">
-    <svg viewBox="0 0 1024 1024" role="img" aria-hidden="true">
-      <rect width="1024" height="1024" rx="224" fill="#D85A30"/>
-      <g fill="#FFFFFF">
-        <rect x="352" y="156" width="136" height="384" rx="68" transform="rotate(-14 420 348)"/>
-        <rect x="536" y="156" width="136" height="384" rx="68" transform="rotate(14 604 348)"/>
-        <circle cx="512" cy="648" r="248"/>
-      </g>
-    </svg>
+  <button class="bunny" id="bunny" aria-label="うさぎ(クリックすると跳ねます)" style="margin:clamp(44px,8vh,76px) auto 0;border:none;background:none;cursor:pointer;display:block">
+    <svg viewBox="0 0 1024 1024" role="img" aria-hidden="true" style="width:104px;height:104px;border-radius:24px;display:block;box-shadow:0 16px 40px rgba(216,90,48,.28)"><rect width="1024" height="1024" rx="224" fill="#D85A30"/><g fill="#fff"><rect x="352" y="156" width="136" height="384" rx="68" transform="rotate(-14 420 348)"/><rect x="536" y="156" width="136" height="384" rx="68" transform="rotate(14 604 348)"/><circle cx="512" cy="648" r="248"/></g></svg>
   </button>
-  <p class="bunny-note">クリックすると跳ねます。本物もよく跳ねます。</p>
+  <p style="margin:14px 0 0;font-size:11.5px;color:var(--fg2);letter-spacing:.08em">クリックすると跳ねます。本物もよく跳ねます。</p>
 
-  <p class="back"><a href="./index.html">← usagii のページへ戻る</a></p>
-  <p class="bunny-note">うさぎは今日も元気です。</p>
+  <p style="margin:clamp(50px,9vh,84px) 0 0;font-size:13.5px"><a href="index.html" style="font-family:'Zen Maru Gothic',sans-serif;font-weight:700;color:var(--link)">← usagii のページへ戻る</a></p>
+  <p style="margin:14px 0 0;font-size:11.5px;color:var(--fg2);letter-spacing:.08em">うさぎは今日も元気です。</p>
 </main>
 
-<footer>
-  <span class="mk">usagii</span>
-  <span>© 2026 usagii project</span>
-  <a href="https://github.com/koutakagatsume/usagii">GitHub</a>
-  <a href="./changelog.html">更新履歴</a>
-  <a href="./privacy.html">プライバシー・免責事項</a>
-  <a href="./verify.html">通信の検証方法</a>
-  <a href="./usagi.html">名前の由来</a>
+<footer style="background:#2A211B;color:#b4a99f;position:relative;z-index:1">
+  <div style="max-width:920px;margin:0 auto;padding:40px 26px 52px;display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-size:12.5px">
+    <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;color:#E8693F;font-size:16px">usagii</span>
+    <span>© 2026 usagii project</span>
+    <a href="https://github.com/koutakagatsume/usagii" style="color:#d3cabf" data-uh2>GitHub</a>
+    <a href="changelog.html" style="color:#d3cabf" data-uh3>更新履歴</a>
+    <a href="privacy.html" style="color:#d3cabf" data-uh4>プライバシー・免責事項</a>
+    <a href="verify.html" style="color:#d3cabf" data-uh5>通信の検証方法</a>
+    <a href="usagi.html" style="color:#d3cabf" data-uh6>名前の由来</a>
+  </div>
 </footer>
 
+</div>
 <script>
-// 段落をスクロールで順に出す
-const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.3});
-document.querySelectorAll('.prose p').forEach(p=>io.observe(p));
-
-// うさぎ: クリックで跳ねる
-const b=document.getElementById('bunny');
-b.addEventListener('click',()=>{
-  b.classList.remove('hop');
-  void b.offsetWidth; // アニメーション再生のためのリフロー
-  b.classList.add('hop');
-});
+class DCLogic{setState(){}forceUpdate(){}}
+class Component extends DCLogic {
+  componentDidMount() {
+    this._initTheme();
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    const lines = document.querySelectorAll('.pl');
+    if (reduce) lines.forEach(p => p.classList.add('in'));
+    else lines.forEach((p, i) => setTimeout(() => p.classList.add('in'), 250 + i * 600));
+    const b = document.getElementById('bunny');
+    if (b) b.addEventListener('click', () => { b.classList.remove('hop'); void b.offsetWidth; b.classList.add('hop'); });
+  }
+  _initTheme() {
+    const root = document.documentElement, KEY = 'usagii-lp-theme';
+    const mq = window.matchMedia('(prefers-color-scheme:dark)');
+    const resolve = () => { const p = localStorage.getItem(KEY); return (p === 'dark' || p === 'light') ? p : (mq.matches ? 'dark' : 'light'); };
+    const sun = document.getElementById('ubSun'), moon = document.getElementById('ubMoon');
+    const apply = () => {
+      const p = localStorage.getItem(KEY);
+      if (p === 'dark' || p === 'light') root.setAttribute('data-theme', p); else root.removeAttribute('data-theme');
+      const eff = resolve();
+      if (sun && moon) { sun.style.display = eff === 'dark' ? '' : 'none'; moon.style.display = eff === 'dark' ? 'none' : ''; }
+    };
+    apply();
+    const btn = document.getElementById('ubTheme');
+    if (btn) btn.addEventListener('click', () => { localStorage.setItem(KEY, resolve() === 'dark' ? 'light' : 'dark'); apply(); });
+    if (mq.addEventListener) mq.addEventListener('change', () => { if (!localStorage.getItem(KEY)) apply(); });
+  }
+  renderVals() { return {}; }
+}
+document.addEventListener("DOMContentLoaded",function(){try{var c=new Component();if(c.componentDidMount)c.componentDidMount();}catch(e){console.error(e);}});
 </script>
 </body>
 </html>

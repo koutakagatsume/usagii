@@ -11,85 +11,133 @@
 <link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --coral:#D85A30; --paper:#FAF8F6; --ink:#211D1A; --mist:#6E6862; --line:rgba(33,29,26,.12);
-  --card:#FFFFFF;
-  --disp:'Zen Maru Gothic','Hiragino Maru Gothic ProN',sans-serif;
-  --body:'Hiragino Sans','Yu Gothic UI','Segoe UI',sans-serif;
-  color-scheme:light dark;
-}
-@media (prefers-color-scheme: dark){
-  :root{--coral:#E8693F;--paper:#1B1917;--ink:#ECE8E4;--mist:#A39C95;--line:rgba(236,232,228,.14);--card:#252220}
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--paper);color:var(--ink);font-family:var(--body);line-height:1.95;font-feature-settings:"palt";-webkit-font-smoothing:antialiased}
-a{color:var(--coral);text-decoration:none}
-a:hover{text-decoration:underline}
-:focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:6px}
-main{max-width:720px;margin:0 auto;padding:64px 24px 40px}
-.back{display:inline-block;font-size:13.5px;font-family:var(--disp);font-weight:700}
-h1{font-family:var(--disp);font-weight:900;font-size:clamp(24px,4.4vw,34px);line-height:1.4;margin:26px 0 6px}
-.upd{font-size:12.5px;color:var(--mist)}
-h2{font-family:var(--disp);font-weight:700;font-size:18px;margin:42px 0 10px;padding-top:26px;border-top:1px solid var(--line)}
-p,li{font-size:14.5px;color:var(--mist)}
-p{margin-top:10px}
-ol,ul{margin:10px 0 0 1.5em}
-li{margin-top:6px}
-b{color:var(--ink)}
-code{font-family:Consolas,monospace;font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
-.note{margin-top:14px;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:12px;font-size:13.5px}
-footer{max-width:720px;margin:0 auto;padding:40px 24px 56px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mist);display:flex;gap:18px;flex-wrap:wrap;align-items:center}
-footer .mk{font-family:var(--disp);font-weight:900;color:var(--coral)}
+  *{box-sizing:border-box}
+  :root{color-scheme:light;--bg:#FBF1E7;--surface:#fff;--fg:#2A211B;--fg2:#5b524a;--line:rgba(42,33,27,.12);--link:#B14422}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#19140F;--surface:#241D16;--fg:#F2E9DF;--fg2:#c2b4a6;--line:rgba(242,233,223,.14);--link:#EE9B7C}}
+  :root[data-theme="dark"]{color-scheme:dark;--bg:#19140F;--surface:#241D16;--fg:#F2E9DF;--fg2:#c2b4a6;--line:rgba(242,233,223,.14);--link:#EE9B7C}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:'Hiragino Sans','Yu Gothic UI','Segoe UI',sans-serif;line-height:1.95;-webkit-font-smoothing:antialiased;font-feature-settings:"palt"}
+  a{color:var(--link);text-decoration:none}
+  a:hover{text-decoration:underline}
+  @media (max-width:560px){ .ub-pad{padding-left:20px!important;padding-right:20px!important} }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+</style>
+<style>
+[data-uh0]:hover{background:rgba(255,255,255,.28) !important}
+[data-uh1]:hover{background:#FFE9DF !important}
+[data-uh2]:hover{color:#fff !important}
+[data-uh3]:hover{color:#fff !important}
+[data-uh4]:hover{color:#fff !important}
+[data-uh5]:hover{color:#fff !important}
+[data-uh6]:hover{color:#fff !important}
 </style>
 </head>
 <body>
-<main>
-  <a class="back" href="./index.html">← usagii トップへ</a>
-  <h1>外部に通信しないことの確認方法</h1>
-  <p class="upd">対象: usagii(Windows 版)/ 想定読者: 導入を検討される企業の管理者の方</p>
+<div style="overflow-x:clip;min-height:100vh;display:flex;flex-direction:column">
 
-  <p>usagii は、予定データ・設定・テレメトリを含む一切の情報を外部へ送信しない設計です。本ページは、それを宣言だけで終わらせず、<b>導入側の検証環境で実際に確認していただくための手順</b>をまとめたものです。</p>
+<header style="position:sticky;top:0;z-index:50;background:#D85A30">
+  <div class="ub-pad" style="max-width:920px;margin:0 auto;padding:13px 26px;display:flex;align-items:center;gap:13px">
+    <a href="index.html" style="display:flex;align-items:center;gap:11px">
+      <svg viewBox="0 0 1024 1024" width="26" height="26" aria-hidden="true" style="flex:none"><g fill="#fff"><rect x="352" y="156" width="136" height="384" rx="68" transform="rotate(-14 420 348)"/><rect x="536" y="156" width="136" height="384" rx="68" transform="rotate(14 604 348)"/><circle cx="512" cy="648" r="248"/></g></svg>
+      <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:19px;color:#fff;letter-spacing:.02em">usagii</span>
+    </a>
+    <nav style="margin-left:auto;display:flex;align-items:center;gap:14px">
+      <button id="ubTheme" type="button" aria-label="テーマを切り替え" style="border:none;background:rgba(255,255,255,.16);color:#fff;width:34px;height:34px;border-radius:999px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;flex:none" data-uh0><svg id="ubMoon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg><svg id="ubSun" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+      <a href="https://github.com/koutakagatsume/usagii/releases/latest/download/usagii-setup.exe" style="font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:14px;color:#D85A30;background:#fff;padding:9px 18px;border-radius:999px;letter-spacing:.02em" data-uh1>ダウンロード</a>
+    </nav>
+  </div>
+</header>
 
-  <h2>手順 A: 通信モニタで実測する(約 10 分)</h2>
-  <ol>
-    <li>検証用の PC または VM に usagii をインストールします</li>
-    <li>Microsoft 純正の <a href="https://learn.microsoft.com/sysinternals/downloads/tcpview">TCPView(Sysinternals)</a>を起動します(より厳密に確認する場合は Wireshark でパケットキャプチャしてください)</li>
-    <li>usagii を起動し、予定の登録・編集・検索・テーマ切替・アプリ再起動など一通り操作します</li>
-    <li><b>usagii.exe、および usagii が起動する WebView2 プロセスからの外部宛て接続が 1 件も発生しない</b>ことを確認します</li>
-  </ol>
-  <div class="note">補足: Windows 自体や WebView2 ランタイム(Microsoft 製の OS コンポーネント)は、usagii とは無関係に Microsoft のサーバーと更新確認等の通信を行うことがあります。検証の際は「usagii のプロセスを起点とする接続」に注目してください。</div>
+<main class="ub-pad" style="flex:1;max-width:780px;margin:0 auto;width:100%;padding:clamp(40px,7vh,72px) 26px clamp(56px,10vh,96px)">
+  <a href="index.html" style="font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:13.5px;color:var(--link)">← usagii トップへ</a>
 
-  <h2>手順 B: ファイアウォールで遮断したまま運用する(恒久的な保証)</h2>
-  <p>usagii はネットワークを一切必要としないため、<b>送信(アウトバウンド)を遮断した状態でも全機能が動作します</b>。開発者を信頼する必要すらない、最も確実な担保です。</p>
-  <ol>
-    <li>「セキュリティが強化された Windows Defender ファイアウォール」を開く</li>
-    <li>「送信の規則」→「新しい規則」→ プログラムに usagii.exe(既定では <code>%LOCALAPPDATA%\usagii\usagii.exe</code>)を指定し、「接続をブロックする」で作成</li>
-    <li>遮断状態のまま、すべての機能が正常に動作することを確認</li>
-  </ol>
+  <div style="margin:26px 0 0">
+    <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:12.5px;letter-spacing:.1em;color:#fff;background:#D85A30;padding:6px 16px;border-radius:999px">セキュリティ</span>
+    <h1 style="margin:18px 0 6px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,5vw,42px);line-height:1.3;color:var(--fg);text-wrap:balance">外部に通信しないことの確認方法</h1>
+    <p style="margin:0;font-size:12.5px;color:var(--fg2)">対象: usagii(Windows 版)/ 想定読者: 導入を検討される企業の管理者の方</p>
+  </div>
 
-  <h2>技術的根拠</h2>
-  <ul>
-    <li><b>ネットワーク系ライブラリ不使用</b> — usagii は HTTP クライアント等の通信ライブラリを一切組み込んでいません。使用ライブラリの一覧(SBOM)はお問い合わせいただければ提出できます</li>
-    <li><b>コンテンツセキュリティポリシー(CSP)による遮断</b> — アプリの UI 層には「アプリ内部以外への接続を許可しない」ポリシーを焼き込んでおり、仮に将来の改修で通信コードが紛れ込んでも実行層でブロックされます</li>
-    <li><b>自動更新機構なし</b> — 更新確認のために外部へ接続する仕組み自体が存在しません。更新は管理者がバージョンを指定してインストーラを実行したときだけ行われます(<a href="./index.html#gov">導入にあたって</a>)</li>
-    <li><b>依存ライブラリの脆弱性検査</b> — リリースビルド時に Rust / JavaScript の依存ライブラリを既知脆弱性データベース(RustSec / npm advisory)と突合し、検出された場合は公開を中止します</li>
-  </ul>
+  <p style="margin:24px 0 0;font-size:15px;color:var(--fg2);text-wrap:pretty">usagii は、予定データ・設定・テレメトリを含む一切の情報を外部へ送信しない設計です。本ページは、それを宣言だけで終わらせず、<b style="color:var(--fg);font-weight:700">導入側の検証環境で実際に確認していただくための手順</b>をまとめたものです。</p>
 
-  <h2>お問い合わせ</h2>
-  <p>検証中に不明な点があれば <a href="https://github.com/koutakagatsume/usagii/issues">GitHub の Issues</a> からご連絡ください。</p>
+  <div style="margin:28px 0 0;background:var(--surface);border:2.5px solid var(--fg);border-radius:24px;padding:clamp(26px,4.5vw,40px);box-shadow:8px 8px 0 0 var(--fg)">
+    <section>
+      <h2 style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:18px;color:var(--fg);margin:0 0 6px;display:flex;align-items:center;gap:11px"><span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;color:#fff;background:#D85A30;font-size:13px;width:26px;height:26px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;flex:none">A</span>通信モニタで実測する(約 10 分)</h2>
+      <ol style="margin:12px 0 0;padding-left:1.5em;font-size:14.5px;color:var(--fg2)">
+        <li style="margin-top:7px">検証用の PC または VM に usagii をインストールします</li>
+        <li style="margin-top:7px">Microsoft 純正の <a href="https://learn.microsoft.com/sysinternals/downloads/tcpview" style="color:var(--link);font-weight:700;border-bottom:2px solid rgba(216,90,48,.3)">TCPView(Sysinternals)</a>を起動します(より厳密に確認する場合は Wireshark でパケットキャプチャしてください)</li>
+        <li style="margin-top:7px">usagii を起動し、予定の登録・編集・検索・テーマ切替・アプリ再起動など一通り操作します</li>
+        <li style="margin-top:7px"><b style="color:var(--fg);font-weight:700">usagii.exe、および usagii が起動する WebView2 プロセスからの外部宛て接続が 1 件も発生しない</b>ことを確認します</li>
+      </ol>
+      <div style="margin:16px 0 0;padding:15px 18px;background:var(--bg);border:1px solid var(--line);border-radius:14px;font-size:13.5px;color:var(--fg2)">補足: Windows 自体や WebView2 ランタイム(Microsoft 製の OS コンポーネント)は、usagii とは無関係に Microsoft のサーバーと更新確認等の通信を行うことがあります。検証の際は「usagii のプロセスを起点とする接続」に注目してください。</div>
+    </section>
 
-  <p style="margin-top:48px"><a class="back" href="./index.html">← usagii トップへ</a></p>
+    <section style="margin-top:28px;padding-top:28px;border-top:1px solid var(--line)">
+      <h2 style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:18px;color:var(--fg);margin:0 0 6px;display:flex;align-items:center;gap:11px"><span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;color:#fff;background:#D85A30;font-size:13px;width:26px;height:26px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;flex:none">B</span>ファイアウォールで遮断したまま運用する(恒久的な保証)</h2>
+      <p style="margin:10px 0 0;font-size:14.5px;color:var(--fg2)">usagii はネットワークを一切必要としないため、<b style="color:var(--fg);font-weight:700">送信(アウトバウンド)を遮断した状態でも全機能が動作します</b>。開発者を信頼する必要すらない、最も確実な担保です。</p>
+      <ol style="margin:12px 0 0;padding-left:1.5em;font-size:14.5px;color:var(--fg2)">
+        <li style="margin-top:7px">「セキュリティが強化された Windows Defender ファイアウォール」を開く</li>
+        <li style="margin-top:7px">「送信の規則」→「新しい規則」→ プログラムに usagii.exe(既定では <code style="font-family:Consolas,monospace;font-size:12.5px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:1px 6px">%LOCALAPPDATA%\usagii\usagii.exe</code>)を指定し、「接続をブロックする」で作成</li>
+        <li style="margin-top:7px">遮断状態のまま、すべての機能が正常に動作することを確認</li>
+      </ol>
+    </section>
+
+    <section style="margin-top:28px;padding-top:28px;border-top:1px solid var(--line)">
+      <h2 style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:18px;color:var(--fg);margin:0 0 6px;display:flex;align-items:center;gap:11px"><span style="width:10px;height:10px;border-radius:3px;background:#D85A30;flex:none"></span>技術的根拠</h2>
+      <ul style="margin:12px 0 0;padding-left:1.4em;font-size:14.5px;color:var(--fg2)">
+        <li style="margin-top:8px"><b style="color:var(--fg);font-weight:700">ネットワーク系ライブラリ不使用</b> — usagii は HTTP クライアント等の通信ライブラリを一切組み込んでいません。使用ライブラリの一覧(SBOM)はお問い合わせいただければ提出できます</li>
+        <li style="margin-top:8px"><b style="color:var(--fg);font-weight:700">コンテンツセキュリティポリシー(CSP)による遮断</b> — アプリの UI 層には「アプリ内部以外への接続を許可しない」ポリシーを焼き込んでおり、仮に将来の改修で通信コードが紛れ込んでも実行層でブロックされます</li>
+        <li style="margin-top:8px"><b style="color:var(--fg);font-weight:700">自動更新機構なし</b> — 更新確認のために外部へ接続する仕組み自体が存在しません。更新は管理者がバージョンを指定してインストーラを実行したときだけ行われます(<a href="index.html#gov" style="color:var(--link);font-weight:700;border-bottom:2px solid rgba(216,90,48,.3)">導入にあたって</a>)</li>
+        <li style="margin-top:8px"><b style="color:var(--fg);font-weight:700">依存ライブラリの脆弱性検査</b> — リリースビルド時に Rust / JavaScript の依存ライブラリを既知脆弱性データベース(RustSec / npm advisory)と突合し、検出された場合は公開を中止します</li>
+      </ul>
+    </section>
+
+    <section style="margin-top:28px;padding-top:28px;border-top:1px solid var(--line)">
+      <h2 style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:18px;color:var(--fg);margin:0 0 6px;display:flex;align-items:center;gap:11px"><span style="width:10px;height:10px;border-radius:3px;background:#D85A30;flex:none"></span>お問い合わせ</h2>
+      <p style="margin:10px 0 0;font-size:14.5px;color:var(--fg2)">検証中に不明な点があれば <a href="https://github.com/koutakagatsume/usagii/issues" style="color:var(--link);font-weight:700;border-bottom:2px solid rgba(216,90,48,.3)">GitHub の Issues</a> からご連絡ください。</p>
+    </section>
+  </div>
+
+  <p style="margin:34px 0 0"><a href="index.html" style="font-family:'Zen Maru Gothic',sans-serif;font-weight:700;font-size:13.5px;color:var(--link)">← usagii トップへ</a></p>
 </main>
-<footer>
-  <span class="mk">usagii</span>
-  <span>© 2026 usagii project</span>
-  <a href="https://github.com/koutakagatsume/usagii">GitHub</a>
-  <a href="./changelog.html">更新履歴</a>
-  <a href="./privacy.html">プライバシー・免責事項</a>
-  <a href="./verify.html">通信の検証方法</a>
-  <a href="./usagi.html">名前の由来</a>
+
+<footer style="background:#2A211B;color:#b4a99f">
+  <div class="ub-pad" style="max-width:920px;margin:0 auto;padding:40px 26px 52px;display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-size:12.5px">
+    <span style="font-family:'Zen Maru Gothic',sans-serif;font-weight:900;color:#E8693F;font-size:16px">usagii</span>
+    <span>© 2026 usagii project</span>
+    <a href="https://github.com/koutakagatsume/usagii" style="color:#d3cabf" data-uh2>GitHub</a>
+    <a href="changelog.html" style="color:#d3cabf" data-uh3>更新履歴</a>
+    <a href="privacy.html" style="color:#d3cabf" data-uh4>プライバシー・免責事項</a>
+    <a href="verify.html" style="color:#d3cabf" data-uh5>通信の検証方法</a>
+    <a href="usagi.html" style="color:#d3cabf" data-uh6>名前の由来</a>
+  </div>
 </footer>
+
+</div>
+<script>
+class DCLogic{setState(){}forceUpdate(){}}
+class Component extends DCLogic {
+  componentDidMount() { this._initTheme(); }
+  _initTheme() {
+    const root = document.documentElement, KEY = 'usagii-lp-theme';
+    const mq = window.matchMedia('(prefers-color-scheme:dark)');
+    const resolve = () => { const p = localStorage.getItem(KEY); return (p === 'dark' || p === 'light') ? p : (mq.matches ? 'dark' : 'light'); };
+    const sun = document.getElementById('ubSun'), moon = document.getElementById('ubMoon');
+    const apply = () => {
+      const p = localStorage.getItem(KEY);
+      if (p === 'dark' || p === 'light') root.setAttribute('data-theme', p); else root.removeAttribute('data-theme');
+      const eff = resolve();
+      if (sun && moon) { sun.style.display = eff === 'dark' ? '' : 'none'; moon.style.display = eff === 'dark' ? 'none' : ''; }
+    };
+    apply();
+    const btn = document.getElementById('ubTheme');
+    if (btn) btn.addEventListener('click', () => { localStorage.setItem(KEY, resolve() === 'dark' ? 'light' : 'dark'); apply(); });
+    if (mq.addEventListener) mq.addEventListener('change', () => { if (!localStorage.getItem(KEY)) apply(); });
+  }
+  renderVals() { return {}; }
+}
+document.addEventListener("DOMContentLoaded",function(){try{var c=new Component();if(c.componentDidMount)c.componentDidMount();}catch(e){console.error(e);}});
+</script>
 </body>
 </html>
