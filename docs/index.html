@@ -380,5 +380,24 @@ class Component extends DCLogic {
 }
 document.addEventListener("DOMContentLoaded",function(){try{var c=new Component();if(c.componentDidMount)c.componentDidMount();}catch(e){console.error(e);}});
 </script>
+
+<!-- Dify チャットボット(外部サービス udify.app を読み込みます) -->
+<script>
+  window.difyChatbotConfig = { token: 'AhNF0B4ssapFRq42' };
+</script>
+<script src="https://udify.app/embed.min.js" id="AhNF0B4ssapFRq42" defer></script>
+<style>
+  /* ボタンの中身を usagii のうさぎアイコンに差し替え */
+  #dify-chatbot-bubble-button {
+    background-color: #D85A30 !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cg fill='white'%3E%3Crect x='352' y='156' width='136' height='384' rx='68' transform='rotate(-14 420 348)'/%3E%3Crect x='536' y='156' width='136' height='384' rx='68' transform='rotate(14 604 348)'/%3E%3Ccircle cx='512' cy='648' r='248'/%3E%3C/g%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 56% !important;
+  }
+  #dify-chatbot-bubble-button svg { display: none !important; }
+  /* Dify は窓を position:absolute にするためページと一緒に流れてしまう。fixed に上書きして画面右下に固定 */
+  #dify-chatbot-bubble-window { position: fixed !important; width: 24rem !important; height: 40rem !important; }
+</style>
 </body>
 </html>
