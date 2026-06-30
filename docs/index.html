@@ -47,17 +47,24 @@
   .ub-link:hover{border-color:#D85A30}
   .ub-steptext{display:flex;flex-direction:column;align-items:flex-start}
   @media (max-width:900px){
-    /* スマホではアプリ UI モックを出さず、機能テキストを素直に縦並びで見せる。
-       (モック上部固定 + テキスト固定の方式は実機で見切れ・崩れが出やすいため廃止) */
-    .ub-storygrid{grid-template-columns:1fr!important;gap:0!important;padding-left:20px!important;padding-right:20px!important}
+    /* スマホはアプリモックを出さず、各機能を「利用者の声」と同じカード型で縦に積む。
+       サイト共通の data-rv フェードインで出す。カードを映えさせるため features の
+       背景は通常の地色にし、上の太線も外す(カードが浮いて見える)。 */
+    #features{background:var(--bg)!important;border-top:none!important}
+    .ub-storygrid{grid-template-columns:1fr!important;gap:0!important;padding:8px 20px 0!important}
     .ub-stage{display:none!important}
-    .ub-steps{padding:8px 0 0!important}
-    .ub-step{min-height:0!important;padding:30px 0!important;max-width:none!important;display:block!important;border-top:1px solid rgba(128,128,128,.18)}
-    .ub-step:first-child{border-top:none}
+    .ub-steps{padding:0!important;display:flex!important;flex-direction:column;gap:18px}
+    .ub-step{min-height:0!important;max-width:none!important;display:block!important;
+      background:var(--surface);border-radius:24px 24px 24px 8px;
+      box-shadow:0 10px 26px rgba(42,33,27,.08);padding:24px 22px!important}
     .ub-steptext{position:static!important;opacity:1!important;pointer-events:auto!important}
-    .ub-steptext h2{font-size:25px!important;line-height:1.28!important;margin:0 0 10px!important}
-    .ub-steptext p{font-size:15.5px!important}
+    .ub-steptext h2{font-size:24px!important;line-height:1.28!important;margin:0 0 10px!important}
+    .ub-steptext p{font-size:15px!important}
     .ub-hide-sm{display:none!important}
+  }
+  @media (min-width:901px){
+    /* data-rv をステップに付けたが、PC のスクロール連動列は従来どおり常時表示 */
+    .ub-step[data-rv]{opacity:1!important;transform:none!important}
   }
   @media (max-width:560px){
     .ub-pad{padding-left:20px!important;padding-right:20px!important}
@@ -132,28 +139,28 @@
 <section id="features" style="background:var(--surface);border-top:3px solid var(--fg)">
   <div class="ub-pad ub-storygrid" style="max-width:1140px;margin:0 auto;padding:0 26px;display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:start">
     <div class="ub-steps" style="order:1;padding:8vh 0">
-      <div class="ub-step" data-scene="list" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
+      <div class="ub-step" data-rv data-scene="list" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
         <div class="ub-steptext">
         <span style="align-self:flex-start;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.06em;color:#fff;background:#86D9B9;color:#0d5b45;padding:5px 14px;border-radius:999px;margin:0 0 14px">01 リスト</span>
         <h2 style="margin:0 0 16px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,3.6vw,40px);line-height:1.28;color:var(--fg)">予定がある日だけ、<br>まっすぐ。</h2>
         <p style="margin:0;color:var(--fg2);font-size:16.5px;text-wrap:pretty">空白の日は出しません。日付はスクロールで上に貼り付き、「今日」ボタンでいつでも現在へ。週・月表示にもワンタップで切り替え。</p>
         </div>
       </div>
-      <div class="ub-step" data-scene="pin" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
+      <div class="ub-step" data-rv data-scene="pin" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
         <div class="ub-steptext">
         <span style="align-self:flex-start;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.06em;background:#FFC25C;color:#6b4a00;padding:5px 14px;border-radius:999px;margin:0 0 14px">02 ピン留め</span>
         <h2 style="margin:0 0 16px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,3.6vw,40px);line-height:1.28;color:var(--fg)">2ヶ月先の締切が、<br>ずっと見えてる。</h2>
         <p style="margin:0;color:var(--fg2);font-size:16.5px;text-wrap:pretty">ピン留めした予定は一覧の最上部に固定。「あと N 日」のカウントダウンで、遠い締切も見失いません。</p>
         </div>
       </div>
-      <div class="ub-step" data-scene="cat" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
+      <div class="ub-step" data-rv data-scene="cat" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
         <div class="ub-steptext">
         <span style="align-self:flex-start;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.06em;background:#93C5F0;color:#0c447c;padding:5px 14px;border-radius:999px;margin:0 0 14px">03 カテゴリ</span>
         <h2 style="margin:0 0 16px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,3.6vw,40px);line-height:1.28;color:var(--fg)">色で分けて、<br>ぱっと絞る。</h2>
         <p style="margin:0;color:var(--fg2);font-size:16.5px;text-wrap:pretty">予定には複数のカテゴリを付けられます。バッジをクリックすれば、その仲間だけにきゅっと絞り込み。</p>
         </div>
       </div>
-      <div class="ub-step" data-scene="theme" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
+      <div class="ub-step" data-rv data-scene="theme" style="min-height:90vh;display:flex;flex-direction:column;justify-content:center;max-width:25em">
         <div class="ub-steptext">
         <span style="align-self:flex-start;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:13px;letter-spacing:.06em;background:var(--fg);color:var(--surface);padding:5px 14px;border-radius:999px;margin:0 0 14px">04 テーマ</span>
         <h2 style="margin:0 0 16px;font-family:'Zen Maru Gothic',sans-serif;font-weight:900;font-size:clamp(27px,3.6vw,40px);line-height:1.28;color:var(--fg)">夜は、<br>ダークに。</h2>
