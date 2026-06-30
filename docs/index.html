@@ -47,22 +47,16 @@
   .ub-link:hover{border-color:#D85A30}
   .ub-steptext{display:flex;flex-direction:column;align-items:flex-start}
   @media (max-width:900px){
-    /* スマホでも PC と同じスクロールテリング: モックを上部に固定し、各機能テキストは
-       モックの下に sticky 固定。スクロールでモックのシーンと下のテキストが 01→04 に切り替わる。
-       テキストが常にモック下に居座るので、余白やバッジの重なりが出ない。 */
+    /* スマホではアプリ UI モックを出さず、機能テキストを素直に縦並びで見せる。
+       (モック上部固定 + テキスト固定の方式は実機で見切れ・崩れが出やすいため廃止) */
     .ub-storygrid{grid-template-columns:1fr!important;gap:0!important;padding-left:20px!important;padding-right:20px!important}
-    .ub-stage{position:sticky!important;top:72px!important;height:auto!important;order:-1!important;z-index:5;display:flex!important;justify-content:center;padding:10px 0 6px!important;background:var(--surface)!important}
-    .ub-mockscale{zoom:.5}
-    .ub-steps{padding:0!important}
-    .ub-step{min-height:84vh!important;padding:0!important;max-width:none!important;display:block!important}
-    /* 各機能テキストはモック下の同じ位置に固定し、有効な1つだけ表示。切替はクロスフェード */
-    /* テキストは sticky でモック下に固定(その機能のステップ=features 内に紐づくので、
-       セクションを抜けると一緒にスクロールアウトして次セクションに残らない)。
-       有効な1機能だけ opacity で表示する。 */
-    .ub-steptext{position:sticky!important;top:466px;opacity:0;pointer-events:none}
-    .ub-steptext.is-on{opacity:1}
-    .ub-steptext h2{font-size:25px!important;line-height:1.26!important;margin-bottom:10px!important}
-    .ub-steptext p{font-size:15px!important}
+    .ub-stage{display:none!important}
+    .ub-steps{padding:8px 0 0!important}
+    .ub-step{min-height:0!important;padding:30px 0!important;max-width:none!important;display:block!important;border-top:1px solid rgba(128,128,128,.18)}
+    .ub-step:first-child{border-top:none}
+    .ub-steptext{position:static!important;opacity:1!important;pointer-events:auto!important}
+    .ub-steptext h2{font-size:25px!important;line-height:1.28!important;margin:0 0 10px!important}
+    .ub-steptext p{font-size:15.5px!important}
     .ub-hide-sm{display:none!important}
   }
   @media (max-width:560px){
