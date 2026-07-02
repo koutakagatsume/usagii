@@ -86,7 +86,7 @@
       </div>
       <div class="sect">
         <div class="ph">∧ 検索<span class="nav"><span class="vseg"><b class="on">日</b><b>週</b><b>月</b></span><span class="nbtn">‹</span><span class="nbtn">今日</span><span class="nbtn">›</span></span></div>
-        <div class="srch"><span class="search">タイトルで検索</span></div>
+        <div class="srch"><span class="search">タイトル・詳細で検索</span></div>
         <div class="chips">
           <span class="chip on">すべて</span><span class="chip c-w">仕事</span><span class="chip c-p">私用</span><span class="chip c-i imp">重要</span><span class="chip c-h">家</span>
         </div>
