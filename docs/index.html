@@ -399,6 +399,24 @@ document.addEventListener("DOMContentLoaded",function(){try{var c=new Component(
   #dify-chatbot-bubble-button svg { display: none !important; }
   /* Dify は窓を position:absolute にするためページと一緒に流れてしまう。fixed に上書きして画面右下に固定 */
   #dify-chatbot-bubble-window { position: fixed !important; width: 24rem !important; height: 40rem !important; }
+  /* スマホでは 24rem 固定だと画面からはみ出して中途半端になるため、全画面で表示する。
+     閉じる操作はバブルボタン(トグル)なので、ボタンを窓より前面に残す */
+  @media (max-width: 640px) {
+    #dify-chatbot-bubble-window {
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;   /* dvh 非対応ブラウザ向けフォールバック */
+      height: 100dvh !important;  /* モバイルのアドレスバー分を除いた実表示域 */
+      max-width: none !important;
+      max-height: none !important;
+      border-radius: 0 !important;
+      z-index: 2147483646 !important;
+    }
+    #dify-chatbot-bubble-button { z-index: 2147483647 !important; }
+  }
 </style>
 </body>
 </html>
